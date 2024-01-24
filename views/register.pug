@@ -1,0 +1,20 @@
+section.main
+  h1 Register
+  form(hx-post="/api/user/register/", hx-swap="outerHTML", hx-target=".main")
+    if error_message
+      p Error: #{error_message}.
+    label Username
+    br
+    input(type="text", name="username")
+    br
+    label Email
+    br
+    input(type="email", name="email")
+    br
+    label Password
+    br
+    input(type="password", name="password")
+    br
+    input(type="submit", name="submit")
+  label Already have an account?
+  button(hx-get="/api/user/login", hx-swap="outerHTML", hx-target=".main") Login
