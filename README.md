@@ -1,6 +1,6 @@
 # Swipe Chat
 
-Tech: HTMX, Tailwind CSS, Express, TypeScript, MongoDB, JWT, Passport
+Tech: HTMX, Tailwind CSS, Express, Pug, TypeScript, MongoDB, JWT, Passport
 
 ## Initial plan and ideation
 
