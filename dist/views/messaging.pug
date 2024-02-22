@@ -1,0 +1,5 @@
+section.main
+  include menu
+  h1 Chats
+  p(hx-get="/user/chats", hx-swap="outerHTML", hx-target="this", hx-trigger="load") Chats come here
+  section.chat-area

@@ -1,8 +1,8 @@
 section.main
   h1 Login
-  form(hx-post="/api/user/login/", hx-swap="outerHTML", hx-target=".main")
+  form(hx-post="/user/login", hx-swap="outerHTML", hx-target=".main")
     if error_message
-      p Error: #{error_message}.
+      p Error: #{error_message}
     label Email
     br
     input(type="email", name="email")
@@ -13,4 +13,4 @@ section.main
     br
     input(type="submit", name="submit")
   label New around here?
-  button(hx-get="/api/user/register", hx-swap="outerHTML", hx-target=".main") Sign up
+  button(hx-get="/user/register", hx-swap="outerHTML", hx-target=".main") Sign up

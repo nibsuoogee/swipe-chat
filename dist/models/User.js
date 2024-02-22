@@ -1,7 +1,10 @@
-const mongoose = require('mongoose');
-const ObjectId = mongoose.Schema.Types.ObjectId;
-
-const userSchema = new mongoose.Schema({
+import { Schema, model } from 'mongoose';
+const userSchema = new Schema({
+    id: {
+        type: String,
+        unique: true,
+        required: true
+    },
     is_admin: Boolean,
     user_name: {
         type: String,
@@ -23,7 +26,7 @@ const userSchema = new mongoose.Schema({
             contentType: String
         }
     ],
-    chat_ids: [ObjectId]
-})
-
-module.exports = mongoose.model('User', userSchema);
+    friends: [{ type: String, ref: 'User' }],
+    chat_ids: [{ type: String, ref: 'Chat' }]
+});
+export default model('User', userSchema);

@@ -1,0 +1,13 @@
+section.chat-area
+  h1 Chatting with: #{friend}
+  section.chat-feed
+    h1(hx-get="/user/messages/"+ friend_id, 
+      hx-swap="outerHTML", 
+      hx-target="this", 
+      hx-trigger="load") messages come here
+
+  form(hx-post="/user/send-chat/"+ friend_id, 
+    hx-swap="innerHTML", 
+    hx-target=".chat-feed")
+    input(type="text", name="chatInput")
+    input(type="submit", name="send")

@@ -1,0 +1,23 @@
+section.main
+  include menu
+  h1 Edit your information
+  if error_message
+      p Error: #{error_message}.
+
+  form(hx-post="/user/edit-username/", hx-swap="outerHTML", hx-target=".main")
+    label Current username is #{username}. New username:
+    br
+    input(type="text", name="username")
+    br
+    input(type="submit", name="submit")
+
+  form(hx-post="/user/edit-password/", hx-swap="outerHTML", hx-target=".main")
+    label New password:
+    br
+    input(type="password", name="password")
+    br
+    label New password again:
+    br
+    input(type="password", name="passwordagain")
+    br
+    input(type="submit", name="submit")

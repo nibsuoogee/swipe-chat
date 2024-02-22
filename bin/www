@@ -4,9 +4,10 @@
  * Module dependencies.
  */
 
-var app = require('../server');
-var debug = require('debug')('swipe-chat:server');
-var http = require('http');
+import app from '../dist/server.js';
+import debugModule from 'debug';
+const debug = debugModule('swipe-chat:server');
+import http from 'http';
 
 /**
  * Get port from environment and store in Express.

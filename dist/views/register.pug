@@ -1,6 +1,6 @@
 section.main
   h1 Register
-  form(hx-post="/api/user/register/", hx-swap="outerHTML", hx-target=".main")
+  form(hx-post="/user/register/", hx-swap="outerHTML", hx-target=".main")
     if error_message
       p Error: #{error_message}.
     label Username
@@ -17,4 +17,4 @@ section.main
     br
     input(type="submit", name="submit")
   label Already have an account?
-  button(hx-get="/api/user/login", hx-swap="outerHTML", hx-target=".main") Login
+  button(hx-get="/user/login", hx-swap="outerHTML", hx-target=".main") Login
