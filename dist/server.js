@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import passport from 'passport';
 import session from 'express-session';
+import indexRouter from './routes/index.js';
 const app = express();
 import User from './models/User.js';
 import mongoose from 'mongoose';
@@ -44,18 +45,15 @@ app.use(passport.session());
 import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
-//app.use('/', indexRouter);
-app.get('/', function (req, res) {
-    console.log("/ route");
-    return res.render('index', { username: "Guest" });
-});
+app.use('/uploads', express.static(path.join(__dirname, '/public/uploads')));
+app.use('/', indexRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     next(createError(404));

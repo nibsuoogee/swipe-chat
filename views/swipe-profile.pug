@@ -1,0 +1,7 @@
+section.swipe-profile
+  ul
+    each image in images 
+      image(src="/uploads/"+image, alt="Profile image")
+  h1 username: #{username}
+  button(hx-get="/user/like/"+ id, hx-swap="outerHTML", hx-target=".swipe-profile") Like
+  button(hx-get="/user/new-swipe-profile", hx-swap="outerHTML", hx-target=".swipe-profile") Dislike

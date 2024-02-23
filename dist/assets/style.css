@@ -1,3 +1,17 @@
+/*
 * {
     background-color: rgb(255, 252, 167);
+}
+*/
+
+h1,
+p,
+button,
+form,
+label {
+    color: rgb(255, 255, 255);
+}
+
+body {
+    background-image: url("dent-background.png");
 }

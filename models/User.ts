@@ -6,7 +6,8 @@ export interface IUser {
   user_name: string;
   email: string;
   password: string;
-  images: { data: Buffer; contentType: string }[];
+  images: String[];
+  likes: String[];
   friends: String[];
   chat_ids: String[];
 }
@@ -32,12 +33,8 @@ const userSchema = new Schema<IUser>({
     type: String,
     required: true
   },
-  images: [
-    {
-      data: Buffer,
-      contentType: String
-    }
-  ],
+  images: [{ type: String }],
+  likes: [{ type: String, ref: 'User' }],
   friends: [{ type: String, ref: 'User' }],
   chat_ids: [{ type: String, ref: 'Chat' }]
 })

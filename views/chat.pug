@@ -1,0 +1,5 @@
+section.chat
+  image(src="/uploads/"+image, alt="Profile image", height="200")  
+  h1 #{username}
+  button(hx-get="/user/chat/"+ id, hx-swap="outerHTML", hx-target=".chat-area") Chat
+  button(hx-post="/user/remove-match/"+ id, hx-swap="outerHTML", hx-target=".chat") Remove match

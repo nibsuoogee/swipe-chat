@@ -1,0 +1,15 @@
+section.main
+  include menu
+  h1 Images 
+  ul
+    each image in images 
+      image(src="/uploads/"+image, alt="Profile image", height="100")  
+      button(hx-post="/user/remove-image/"+image, hx-swap="outerHTML", hx-target=".main") Remove
+  form(hx-post="/user/upload-image", enctype="multipart/form-data", hx-swap="outerHTML", hx-target=".main")
+    if status_message
+      p #{status_message}
+    label Upload a profile image
+    br
+    input(type="file", name="image")
+    br
+    input(type="submit", name="submit")
