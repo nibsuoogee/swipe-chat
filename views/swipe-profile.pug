@@ -1,7 +1,17 @@
-section.swipe-profile
-  ul
-    each image in images 
-      image(src="/uploads/"+image, alt="Profile image")
-  h1 username: #{username}
-  button(hx-get="/user/like/"+ id, hx-swap="outerHTML", hx-target=".swipe-profile") Like
-  button(hx-get="/user/new-swipe-profile", hx-swap="outerHTML", hx-target=".swipe-profile") Dislike
+section.swipe-profile.sample.transition
+  div
+    div.rounded.rounded-3xl.overflow-hidden.shadow-lg.bg-content.absolute.z-1(class="absolute bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-1/5", style="width: 300px; height: 300px;")
+    div.rounded.rounded-3xl.overflow-hidden.shadow-lg.bg-content.absolute.border-2.border-white.z-5(class="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2", style="width: 300px; height: 400px;")
+      ul
+        each image in images 
+          image.absolute.inset-0.w-full.h-full.object-cover(src="/uploads/"+image, alt="Profile image")
+      div.absolute.bottom-0.left-0.w-full.h-16.bg-gradient-to-t.from-black.to-transparent.z-10
+      div.absolute.bottom-0.left-0.p-4.z-15
+        h1.block.text-white.mb-2.py-3.text-3xl.font-bold #{username}
+    div.flex.items-center.justify-between.divide-x.divide-gray-300(class="absolute bottom-0 left-1/2 transform -translate-x-1/2", style="width: 200px; height: 100px;")
+      svg.w-15.h-15.fill-text(viewBox="0 -960 960 960")
+        path(xmlns="http://www.w3.org/2000/svg", d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z", class="hover:fill-lime-500", hx-get="/user/like/"+ id, hx-swap="outerHTML transition:true", hx-target=".swipe-profile", hx-trigger="click")
+      svg.w-15.h-15.fill-text(viewBox="0 -960 960 960")
+        path(xmlns="http://www.w3.org/2000/svg", d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z", class="hover:fill-red-700", hx-get="/user/new-swipe-profile", hx-swap="outerHTML transition:true", hx-target=".swipe-profile", hx-trigger="click")
+
+  

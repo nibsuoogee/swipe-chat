@@ -1,6 +1,17 @@
 section.menu
-  button(hx-get="/user/swipe", hx-swap="outerHTML", hx-target=".main") Find matches
-  button(hx-get="/user/profile", hx-swap="outerHTML", hx-target=".main") Edit your information
-  button(hx-get="/user/image", hx-swap="outerHTML", hx-target=".main") Add an image
-  button(hx-get="/user/messaging", hx-swap="outerHTML", hx-target=".main") Chat
-  button(hx-post="/user/logout", hx-swap="outerHTML", hx-target=".main") Logout
+  //header
+    nav.flex.items-center.justify-between.black(class="w-[92%]")
+      //div.w-full.block.flex-grow(class="lg:flex lg:items-center lg:w-auto") 
+      //div.class("text-sm lg:flex-grow")
+      div
+        ul 
+          li   
+            a(hx-get="/user/swipe", hx-swap="outerHTML", hx-target=".main", class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4") Find matches
+          li
+            a(hx-get="/user/profile", hx-swap="outerHTML", hx-target=".main", class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4") Edit your information
+          li
+            a(hx-get="/user/image", hx-swap="outerHTML", hx-target=".main", class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4") Add an image
+          li
+            a(hx-get="/user/messaging", hx-swap="outerHTML", hx-target=".main", class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4") Chat
+          li 
+            a(hx-post="/user/logout", hx-swap="outerHTML", hx-target=".main", class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4") Logout

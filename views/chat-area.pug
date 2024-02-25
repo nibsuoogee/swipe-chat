@@ -1,13 +1,18 @@
-section.chat-area
-  h1 Chatting with: #{friend}
-  section.chat-feed
-    h1(hx-get="/user/messages/"+ friend_id, 
-      hx-swap="outerHTML", 
-      hx-target="this", 
-      hx-trigger="load") messages come here
+section.chat-area.bg-neutral-900.grid.grid-rows-6.justify-center.rounded
+  div.grid.grid-rows-2
+    h1.block.text-text.mb-2.text-xl.flex.justify-center.items-center #{friend}
+    if last_edited
+      p.block.text-text.text-xs.flex.justify-center.items-center Last edited: #{last_edited}
+  section.row-span-4.h-64.overflow-hidden
+    div.chat-feed.flex.flex-col.h-full.overflow-auto.scrollbar-thin.scrollbar-thumb-text.scrollbar-track-neutral-900.scroll-smooth
+      h1(hx-get="/user/messages/"+ friend_id, 
+        hx-swap="outerHTML", 
+        hx-target="this", 
+        hx-trigger="load") messages come here
 
-  form(hx-post="/user/send-chat/"+ friend_id, 
+  form.max-w-sm.rounded.overflow-hidden.p-4(hx-post="/user/send-chat/"+ friend_id, 
     hx-swap="innerHTML", 
     hx-target=".chat-feed")
-    input(type="text", name="chatInput")
-    input(type="submit", name="send")
+    div.flex.items-center.justify-between.gap-4
+      input.shadow.appearance-none.border.w-full(class="focus:outline-none focus:shadow-outline", type="text", name="chatInput")
+      button.px-4.rounded.bg-accent-1.text-content.font-bold(class="hover:bg-accent-2", type="submit", name="send") Send

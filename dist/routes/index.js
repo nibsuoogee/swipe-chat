@@ -154,6 +154,10 @@ router.post('/user/remove-match/:id', checkAuthReturnMarkup, async function (req
             if (match) {
                 User.updateOne({ 'id': user.id }, {
                     $pull: { 'friends': friend.id }
+                }).then(() => {
+                    let template = pug.compileFile('views/messaging.pug');
+                    let markup = template();
+                    return res.send(markup);
                 }).catch((err) => {
                     console.log(err);
                     return next(err);
@@ -215,11 +219,31 @@ router.get('/user/chats', checkAuthReturnMarkup, async function (req, res, next)
     }
 });
 router.get('/user/chat/:id', checkAuthReturnMarkup, async function (req, res, next) {
+    let template = pug.compileFile('views/chat-area.pug');
+    let last_edited = null;
+    const user = req.user;
+    if (!user || !user.id) {
+        let markup = template({ username: '' });
+        return res.send(markup);
+    }
+    Chat.findOne({ participant_ids: { $all: [user.id, req.params.id] } }).then((chat) => {
+        if (chat) {
+            last_edited = chat.last_edited;
+        }
+        else {
+            console.log('chat not found');
+        }
+    }).catch((err) => { console.log(err); return next(err); });
     User.findOne({ 'id': req.params.id }).then((friend) => {
         if (friend) {
-            let template = pug.compileFile('views/chat-area.pug');
-            let markup = template({ friend: friend.user_name, friend_id: friend.id });
-            return res.send(markup);
+            if (last_edited) {
+                let markup = template({ friend: friend.user_name, friend_id: friend.id, last_edited: last_edited.toLocaleDateString('en-GB') + ' ' + last_edited.toTimeString().split(' ')[0].slice(0, 5) });
+                return res.send(markup);
+            }
+            else {
+                let markup = template({ friend: friend.user_name, friend_id: friend.id });
+                return res.send(markup);
+            }
         }
         else {
             console.log('user not found');
@@ -242,7 +266,14 @@ router.get('/user/messages/:id', checkAuthReturnMarkup, async function (req, res
         if (chat) {
             try {
                 chat.messages.forEach((message) => {
-                    markup += template({ sender_name: name_dict[message.sender_id], text: message.text, date: message.date });
+                    const time = message.date.toTimeString().split(' ')[0].slice(0, 5);
+                    if (time) {
+                        markup += template({
+                            sender_name: name_dict[message.sender_id],
+                            text: message.text,
+                            date: time
+                        });
+                    }
                 });
                 return res.send(markup);
             }

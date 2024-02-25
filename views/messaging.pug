@@ -1,5 +1,6 @@
-section.main
+section.main.outline-4.min-w-96.bg-content.rounded-xl
   include menu
-  h1 Chats
-  p(hx-get="/user/chats", hx-swap="outerHTML", hx-target="this", hx-trigger="load") Chats come here
+  h1.block.text-text.mb-2.py-3.px-4.text-xl Matches
+  div.divide-y.divide-gray-300
+    p(hx-get="/user/chats", hx-swap="outerHTML", hx-target="this", hx-trigger="load") Chats come here
   section.chat-area

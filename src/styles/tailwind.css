@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+    :root {
+        --color-content: 192deg 91% 36%;
+        --color-text: 240deg 6% 10%;
+        --color-accent1: 345deg 83% 41%;
+        --color-accent2: 345deg 83% 30%;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --color-content: 21deg 90% 48%;
+            --color-text: 0deg 0% 98%;
+            --color-accent1: 345deg 83% 41%;
+            --color-accent2: 345deg 83% 30%;
+        }
+    }
+
+    :root[data-theme="dark"] {
+        --color-content: 240deg 6% 10%;
+        --color-text: 60deg 5% 96%;
+        --color-accent1: 345deg 83% 41%;
+        --color-accent2: 345deg 83% 30%;
+    }
+
+    :root[data-theme="light"] {
+        --color-content: 60deg 5% 96%;
+        --color-text: 0deg 0% 50%;
+        --color-accent1: 345deg 83% 41%;
+        --color-accent2: 345deg 83% 30%;
+    }
+}
+
+@layer utilities {
+
+    /* Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+}
+
+* {
+    font-family: manrope;
+    /*outline: 1px solid red;*/
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+}
+
+@keyframes fade-out {
+    to {
+        opacity: 0;
+    }
+}
+
+::view-transition-old(fade-it) {
+    animation: 180ms cubic-bezier(0.4, 0, 1, 1) both fade-out;
+}
+
+::view-transition-new(fade-it) {
+    animation: 180ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in;
+}
+
+.sample-transition {
+    view-transition-name: slide-it;
+}
+
+body * {
+    @apply transition-colors duration-200;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.example::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.example {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+
+.main {
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+}
+
+.dark-mode-switch {
+    z-index: 2;
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+}
+
+.bg-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: black;
+}
+
+.bg-image {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background-image: url("../assets/dent-background.png");
+    filter: blur(10px) brightness(0.5);
+    height: 100%;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

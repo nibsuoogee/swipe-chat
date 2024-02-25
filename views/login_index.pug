@@ -1,12 +1,20 @@
 doctype html
-html(lang='en')
+html.no-scrollbar(lang='en')
   head
     meta(charset='utf-8')
     meta(name='viewport' content='width=device-width, initial-scale=1')
     link(rel="shortcut icon", href="/assets/swipe-chat.png")
-    link(rel='stylesheet', href='/assets/style.css')
     script(src="https://unpkg.com/htmx.org@1.9.10", integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC", crossorigin="anonymous")
-    script(src="https://unpkg.com/hyperscript.org@0.9.12")
+    script(src="/javascripts/darkmode.js", defer)
+    style
+      include ../dist/public/styles/style.css
   body
-    block content
+    div.bg-container
+      div.bg-image
       include login
+
+      section.dark-mode-switch
+        label(class="inline-flex items-center cursor-pointer")
+          input#toggle-dark-mode(type="checkbox" onclick="toggleDarkMode()" value="" class="sr-only peer")
+          div(class="relative w-11 h-6 bg-content peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-accent-1")      
+        
