@@ -79,6 +79,12 @@ router.get('/user/swipe', checkAuthReturnMarkup, function (req, res, next) {
   return res.send(markup);
 });
 
+router.get('/user/menu', checkAuthReturnNothing, function (req, res, next) {
+  let template = pug.compileFile('views/menu.pug');
+  let markup = template();
+  return res.send(markup);
+});
+
 router.get('/user/new-swipe-profile', checkAuthReturnMarkup, function (req, res, next) {
   const user = req.user as IUser | null;
   if (!user || !user.id || !user.friends) {
@@ -94,7 +100,11 @@ router.get('/user/new-swipe-profile', checkAuthReturnMarkup, function (req, res,
     if (users.length > 0) {
       const random_profile = Math.floor(Math.random() * users.length);
       let template = pug.compileFile('views/swipe-profile.pug');
-      let markup = template({ images: users[random_profile].images, username: users[random_profile].user_name, id: users[random_profile].id });
+      let images = users[random_profile].images;
+      if (users[random_profile].images.length < 1) {
+        images.push('default.png');
+      }
+      let markup = template({ images: images, username: users[random_profile].user_name, id: users[random_profile].id });
       return res.send(markup);
     } else {
       let template = pug.compileFile('views/swipe-profile-error.pug');
@@ -104,10 +114,11 @@ router.get('/user/new-swipe-profile', checkAuthReturnMarkup, function (req, res,
   }).catch((err) => { console.log(err); return next(err); });
 });
 
-router.get('/user/like/:id', checkAuthReturnMarkup, function (req, res, next) {
-  res.set('HX-Location', JSON.stringify({ 'path': '/user/new-swipe-profile', 'target': '.swipe-profile' }));
+router.post('/user/like/:id', checkAuthReturnMarkup, function (req, res, next) {
+  console.log('/user/like/:id')
   const user = req.user as IUser | null;
   if (!user || !user.id) {
+    res.set('HX-Location', JSON.stringify({ 'path': '/user/new-swipe-profile', 'target': '.swipe-profile' }));
     return res.send();
   }
 
@@ -137,12 +148,18 @@ router.get('/user/like/:id', checkAuthReturnMarkup, function (req, res, next) {
             return next(err);
           });
         initializeChat(user.id, friend.id);
+        let template = pug.compileFile('views/match-start-chat.pug');
+        let markup = template({ match_name: friend.user_name, friend_id: friend.id });
+        res.set('HX-Retarget', '.match-start-chat');
+        res.set('HX-Reswap', 'innerHTML transition:true');
+        return res.send(markup);
       }
     } else {
       console.log('user not found')
     }
+    res.set('HX-Location', JSON.stringify({ 'path': '/user/new-swipe-profile', 'target': '.swipe-profile' }));
+    return res.send();
   }).catch((err) => { console.log(err); return next(err); });
-  return res.send();
 });
 
 router.post('/user/remove-match/:id', checkAuthReturnMarkup, async function (req, res, next) {
@@ -204,6 +221,12 @@ router.post('/user/logout', checkAuthReturnMarkup, function (req, res, next) {
 router.get('/user/messaging', checkAuthReturnMarkup, function (req, res, next) {
   let template = pug.compileFile('views/messaging.pug');
   let markup = template();
+  return res.send(markup);
+});
+
+router.get('/user/messaging/:id', checkAuthReturnMarkup, function (req, res, next) {
+  let template = pug.compileFile('views/messaging.pug');
+  let markup = template({ friend_id: req.params.id });
   return res.send(markup);
 });
 
@@ -473,7 +496,7 @@ function checkAuthReturnIndex(req: Request, res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
     return next()
   }
-  return res.render('login_index');
+  return res.render('index');
 }
 
 function checkAuthReturnMarkup(req: Request, res: Response, next: NextFunction) {
@@ -482,6 +505,14 @@ function checkAuthReturnMarkup(req: Request, res: Response, next: NextFunction) 
   }
   let template = pug.compileFile('views/login.pug');
   let markup = template();
+  return res.send(markup);
+}
+
+function checkAuthReturnNothing(req: Request, res: Response, next: NextFunction) {
+  if (req.isAuthenticated()) {
+    return next()
+  }
+  let markup = '';
   return res.send(markup);
 }
 

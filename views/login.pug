@@ -1,4 +1,5 @@
 section.main.sample-transition
+  div(hx-get="/user/menu", hx-swap="innerHTML transition:true", hx-target=".menu-div", hx-trigger="load")
   form.bg-content.max-w-sm.rounded.overflow-hidden.shadow-lg.px-8.pt-6.pb-8.mb-4(hx-post="/user/login", hx-swap="outerHTML", hx-target=".main")
     if error_message
       div.mb-4

@@ -1,5 +1,4 @@
 section.main.outline-4.max-w-96.bg-content.rounded-xl
-  include menu
   h1.block.text-text.mb-2.py-3.px-4.text-xl Images 
   div.grid.grid-cols-2.gap-4
     each image in images 
@@ -7,9 +6,9 @@ section.main.outline-4.max-w-96.bg-content.rounded-xl
         div.h-48.overflow-hidden
           image(src="/uploads/"+image, alt="Profile image", height="100", class=" w-full h-full object-cover")  
         svg.w-10.h-10.flex.justify-center.align-center.fill-text(viewBox="0 -960 960 960")
-          path(xmlns="http://www.w3.org/2000/svg", d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z", class="hover:fill-red-700", hx-post="/user/remove-image/"+image, hx-swap="outerHTML", hx-target=".main", hx-trigger="click")
+          path(xmlns="http://www.w3.org/2000/svg", d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z", class="hover:fill-red-700", hx-post="/user/remove-image/"+image, hx-swap="outerHTML transition:true", hx-target=".main", hx-trigger="click")
     div.w-full.h-full.grid
-      form(id="upload-form", enctype="multipart/form-data", hx-post="/user/upload-image", hx-swap="outerHTML", hx-target=".main")
+      form(id="upload-form", enctype="multipart/form-data", hx-post="/user/upload-image", hx-swap="outerHTML transition:true", hx-target=".main")
         label(for="file-upload", class="cursor-pointer")
           svg.w-20.h-20.flex.justify-center.align-center.fill-text(viewBox="0 -960 960 960")
             path(xmlns="http://www.w3.org/2000/svg", d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z", class="hover:fill-lime-500")

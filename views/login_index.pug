@@ -3,12 +3,21 @@ html.no-scrollbar(lang='en')
   head
     meta(charset='utf-8')
     meta(name='viewport' content='width=device-width, initial-scale=1')
-    link(rel="shortcut icon", href="/assets/swipe-chat.png")
+    link(rel="shortcut icon", href="./assets/swipe-chat.png")
     script(src="https://unpkg.com/htmx.org@1.9.10", integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC", crossorigin="anonymous")
     script(src="/javascripts/darkmode.js", defer)
     style
       include ../dist/public/styles/style.css
   body
+    header.bg-content
+      nav.flex.items-center.justify-between.bg-content(class="w-[80%] mx-auto h-16")
+        div.flex.items-center.justify-between.bg-content
+          svg.w-10.fill-text.absolute(viewBox="0 0 500 500")
+            path(xmlns="http://www.w3.org/2000/svg", d="M 36.987 480.196 C 36.987 480.196 60.176 511.937 183.563 465.938 C 306.952 419.936 -8.876 354.371 102.06 224.406 C 212.997 94.441 139.411 324.467 203.942 279.616 C 268.472 234.762 267.326 239.353 258.27 219.806 C 249.216 200.258 268.464 -91.88 120.17 97.893 C -28.122 287.667 105.458 364.719 140.548 413.024 C 175.637 461.327 71.633 457.297 94.278 420.489 C 116.923 383.681 3.954 382.49 36.777 430.796 C 69.599 479.099 17.354 465.732 36.987 480.196 Z")
+          svg.w-10.fill-text.absolute(viewBox="0 0 500 500")
+            path(xmlns="http://www.w3.org/2000/svg", d="M 342.795 281.69 C 342.795 281.69 100.203 405.031 308.534 445.622 C 516.864 486.216 464.585 433.388 445.555 396.665 C 426.525 359.94 379.768 371.003 379.768 388.4 C 379.768 405.795 348.485 448.522 331.363 406.962 C 314.241 365.4 313.296 342.204 353.247 356.702 C 393.2 371.198 398.907 307.411 383.686 292.913 C 368.462 278.414 351.121 278.842 342.795 281.69 Z")
+        div
+   
     div.bg-container
       div.bg-image
       include login
