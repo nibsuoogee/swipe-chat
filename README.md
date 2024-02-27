@@ -1,5 +1,7 @@
 # Swipe Chat
 
+## Technologies
+
 <div class="image-row">
     <img src="https://raw.githubusercontent.com/bigskysoftware/htmx/master/www/static/img/htmx_logo.1.png" height="64" alt="HTMX Logo">
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/1024px-Typescript_logo_2020.svg.png" height="64" alt="TypeScript Logo">
@@ -7,7 +9,13 @@
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/Expressjs.png" height="64" alt="Express.js Logo">
     <img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/pugjs_logo_icon_170825.png" height="64" alt="Pug.js Logo">
     <img src="https://1000logos.net/wp-content/uploads/2020/08/MongoDB-Logo.png" height="64" alt="MongoDB Logo">
-  <img src="https://svgur.com/i/943.svg" height="64" alt="PassportJS Logo">
+    <img src="https://svgur.com/i/943.svg" height="64" alt="PassportJS Logo">
+</div>
+
+## Testing
+
+<div class="image-row">
+    <img src="https://www.cypress.io/images/layouts/cypress-logo.svg" height="64" alt="Cypress Logo">
 </div>
 
 ## Initial plan and ideation
