@@ -4,7 +4,7 @@ section.chat
       image.p-1.h-16.w-16.rounded-full.object-cover(src="/uploads/"+image, alt="Profile image")  
     div.col-span-2.flex.items-center.justify-start
       strong.px-2.text-xl.text-text #{username}
-    svg.w-7.h-7(viewBox="0 -960 960 960")
-        path(xmlns="http://www.w3.org/2000/svg", d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z", class="hover:fill-accent-2", hx-get="/user/chat/"+ id, hx-swap="outerHTML transition:true", hx-target=".chat-area", hx-trigger="click")
-    svg.w-10.h-10(viewBox="0 -960 960 960")
-        path(xmlns="http://www.w3.org/2000/svg", d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z", class="hover:fill-red-700", hx-post="/user/remove-match/"+ id, hx-swap="outerHTML transition:true", hx-target=".main", hx-trigger="click")
+    svg.w-7.h-7(data-cy="open-chat", viewBox="0 -960 960 960", hx-get="/user/chat/"+ id, hx-swap="outerHTML transition:true", hx-target=".chat-area", hx-trigger="click")
+        path(xmlns="http://www.w3.org/2000/svg", d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z", class="hover:fill-accent-2")
+    svg.w-10.h-10(data-cy="remove-match", viewBox="0 -960 960 960", hx-post="/user/remove-match/"+ id, hx-swap="outerHTML transition:true", hx-target=".main", hx-trigger="click")
+        path(xmlns="http://www.w3.org/2000/svg", d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z", class="hover:fill-red-700")

@@ -8,11 +8,11 @@ section.chat-area.bg-neutral-900.grid.grid-rows-6.justify-center.rounded
       h1(hx-get="/user/messages/"+ friend_id, 
         hx-swap="outerHTML", 
         hx-target="this", 
-        hx-trigger="load") messages come here
+        hx-trigger="load")
 
   form.max-w-sm.rounded.overflow-hidden.p-4(hx-post="/user/send-chat/"+ friend_id, 
     hx-swap="innerHTML", 
     hx-target=".chat-feed")
     div.flex.items-center.justify-between.gap-4
-      input.shadow.appearance-none.border.w-full(class="focus:outline-none focus:shadow-outline", type="text", name="chatInput")
-      button.px-4.rounded.bg-accent-1.text-content.font-bold(class="hover:bg-accent-2", type="submit", name="send") Send
+      input.shadow.appearance-none.border.w-full(data-cy="chat-input", class="focus:outline-none focus:shadow-outline", type="text", name="chatInput")
+      button.px-4.rounded.bg-accent-1.text-content.font-bold(data-cy="chat-send",class="hover:bg-accent-2", type="submit", name="send") Send

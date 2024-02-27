@@ -158,39 +158,52 @@ router.post('/user/remove-match/:id', checkAuthReturnMarkup, async function (req
     if (!user || !user.id) {
         return res.send();
     }
-    User.findOne({ 'id': req.params.id }).then((friend) => {
-        if (friend) {
-            User.updateOne({ 'id': user.id }, {
-                $pull: { 'likes': friend.id }
+    try {
+        await removeMatch(user.id, req.params.id, next);
+        let template = pug.compileFile('views/messaging.pug');
+        let markup = template();
+        return res.send(markup);
+    }
+    catch (error) {
+        next(error);
+    }
+    /*
+      User.findOne({ 'id': req.params.id }).then((friend) => {
+      if (friend) {
+        User.updateOne({ 'id': user.id },
+          {
+            $pull: { 'likes': friend.id }
+          }).catch((err) => {
+            console.log(err);
+            return next(err);
+          });
+        const match = friend.likes.includes(user.id);
+        if (match) {
+          User.updateOne({ 'id': user.id },
+            {
+              $pull: { 'friends': friend.id }
+            }).then(() => {
+              let template = pug.compileFile('views/messaging.pug');
+              let markup = template();
+              return res.send(markup);
             }).catch((err) => {
-                console.log(err);
-                return next(err);
+              console.log(err);
+              return next(err);
             });
-            const match = friend.likes.includes(user.id);
-            if (match) {
-                User.updateOne({ 'id': user.id }, {
-                    $pull: { 'friends': friend.id }
-                }).then(() => {
-                    let template = pug.compileFile('views/messaging.pug');
-                    let markup = template();
-                    return res.send(markup);
-                }).catch((err) => {
-                    console.log(err);
-                    return next(err);
-                });
-                User.updateOne({ 'id': friend.id }, {
-                    $pull: { 'friends': user.id }
-                }).catch((err) => {
-                    console.log(err);
-                    return next(err);
-                });
-                removeChat(user.id, friend.id);
-            }
+          User.updateOne({ 'id': friend.id },
+            {
+              $pull: { 'friends': user.id }
+            }).catch((err) => {
+              console.log(err);
+              return next(err);
+            });
+          removeChat(user.id, friend.id);
         }
-        else {
-            console.log('user not found');
-        }
+      } else {
+        console.log('user not found')
+      }
     }).catch((err) => { console.log(err); return next(err); });
+    */
 });
 router.post('/user/logout', checkAuthReturnMarkup, function (req, res, next) {
     req.logout(function (err) {
@@ -458,6 +471,24 @@ router.post('/user/edit-password/', checkAuthReturnMarkup, async function (req, 
     let markup = template();
     return res.send(markup);
 });
+router.delete('/user/profile/', checkAuthReturnMarkup, async function (req, res, next) {
+    let template = pug.compileFile('views/profile.pug');
+    const user = req.user;
+    if (!user || !user.user_name || !user.id) {
+        let markup = template({ username: '', error_message: 'An error occured' });
+        return res.send(markup);
+    }
+    user.friends;
+    user.friends.forEach((friend) => {
+        removeMatch(user.id, friend, next);
+    });
+    User.deleteOne({ id: user.id }).catch((err) => {
+        next(err);
+    });
+    template = pug.compileFile('views/login.pug');
+    let markup = template();
+    return res.send(markup);
+});
 function checkAuthReturnIndex(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
@@ -563,5 +594,39 @@ async function getUserById(id) {
     catch (err) {
         return null;
     }
+}
+async function removeMatch(userid, friendid, next) {
+    User.findOne({ 'id': friendid }).then((friend) => {
+        if (friend) {
+            User.updateOne({ 'id': userid }, {
+                $pull: { 'likes': friend.id }
+            }).catch((err) => {
+                console.log(err);
+                return next(err);
+            });
+            const match = friend.likes.includes(userid);
+            if (match) {
+                User.updateOne({ 'id': userid }, {
+                    $pull: { 'friends': friend.id }
+                }).then(() => {
+                    return;
+                }).catch((err) => {
+                    console.log(err);
+                    return next(err);
+                });
+                User.updateOne({ 'id': friend.id }, {
+                    $pull: { 'friends': userid }
+                }).catch((err) => {
+                    console.log(err);
+                    return next(err);
+                });
+                removeChat(userid, friendid);
+            }
+        }
+        else {
+            console.log('user not found');
+        }
+    }).catch((err) => { console.log(err); return next(err); });
+    //return next();
 }
 export default router;
