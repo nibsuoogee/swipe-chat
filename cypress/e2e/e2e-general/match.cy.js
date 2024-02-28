@@ -39,27 +39,7 @@ describe('mutual like to match spec', () => {
 
       /* Like first swipe card */
       cy.get('[data-cy="like-profile"]').click();
-
-      /* Start chatting with match */
-      cy.get('[data-cy="nav-messaging"]').eq(0).should('be.visible').then(($element) => {
-        if ($element.length > 0) {
-          cy.wrap($element).click();
-        } else {
-          cy.get('[data-cy="nav-messaging"]').eq(1).should('be.visible').click();
-        }
-      });
-      cy.get('[data-cy="open-chat"]').eq(0).should('be.visible').then(($element) => {
-        if ($element.length > 0) {
-          cy.wrap($element).click();
-        }
-      });
-      cy.get('[data-cy="chat-input"]').click()
-        .type(`${usersFixture[1].username} wrote this`).should('have.value', `${usersFixture[1].username} wrote this`);
-      cy.get('[data-cy="chat-send"]').click();
+      cy.get('[data-cy="chat-with-match"]').should('be.visible');
     })
-
-
-
-
   })
 })

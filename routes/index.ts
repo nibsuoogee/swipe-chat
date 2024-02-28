@@ -9,7 +9,6 @@ import passport from 'passport';
 import multer from 'multer';
 import { upload } from '../middleware/upload.js';
 
-
 router.get('/', checkAuthReturnIndex, function (req, res) {
   const user = req.user as IUser | null;
   if (user && user.user_name) {
@@ -56,15 +55,23 @@ router.post('/user/register', checkNotAuthReturnMarkup, function (req, res, next
   }).catch((err) => { console.log(err); return next(err); });
 });
 
-router.get('/user/login', checkNotAuthReturnMarkup, function (req, res, next) {
+router.get('/user/login', checkNotAuthReturnMarkup, function (req: any, res, next) {
   let template = pug.compileFile('views/login.pug');
-  let markup = template({ error_message: '' });
-  res.send(markup);
+  let markup = '';
+  console.log(req.session.messages)
+  if (!req.session || !req.session.messages || !req.session.messages || req.session.messages.length <= 0) {
+    markup = template();
+  } else {
+    const lastErrorIndex = req.session.messages.length - 1;
+    const lastErrorMessage = req.session.messages[lastErrorIndex];
+    markup = template({ error_message: lastErrorMessage });
+  }
+  return res.send(markup);
 });
 
 router.post('/user/login', checkNotAuthReturnIndex, passport.authenticate('local', {
   successRedirect: '/user/swipe',
-  failureRedirect: '/user/login'
+  failureRedirect: '/user/login', failureMessage: true
 }))
 
 router.get('/user/swipe', checkAuthReturnMarkup, function (req, res, next) {

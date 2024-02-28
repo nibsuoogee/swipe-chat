@@ -1,4 +1,3 @@
-//const LocalStrategy = require('passport-local').Strategy
 import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from 'bcrypt';
 function initialize(passport, getUserByEmail, getUserById) {
@@ -15,7 +14,7 @@ function initialize(passport, getUserByEmail, getUserById) {
             }
             else {
                 console.log('Password incorrect');
-                return done(null, false);
+                return done(null, false, { message: 'Incorrect username or password.' });
             }
         }
         catch (e) {
