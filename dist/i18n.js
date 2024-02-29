@@ -3,7 +3,6 @@ import Backend from 'i18next-fs-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import path from 'path';
 import { readdirSync, lstatSync } from 'fs';
-const systemLocale = Intl.DateTimeFormat().resolvedOptions().locale;
 import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,20 +13,9 @@ i18next
     .init({
     initImmediate: false,
     fallbackLng: 'en',
-    /*
-    debug: true,
-    resources: {
-      en: {
-        translation: require('./locales/en/translation.json')
-      },
-      fi: {
-        translation: require('./locales/fi/translation.json')
-      }
-    },
     interpolation: {
-      escapeValue: false,
+        escapeValue: false,
     },
-    */
     preload: readdirSync(localesFolder).filter((fileName) => {
         const joinedPath = path.join(localesFolder, fileName);
         return lstatSync(joinedPath).isDirectory();

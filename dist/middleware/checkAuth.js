@@ -11,8 +11,6 @@ export function checkAuthReturnMarkup(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    console.log("i18next.t('Login')");
-    console.log(i18next.t('Login'));
     let template = pug.compileFile('views/login.pug');
     let markup = template({ t: i18next.t });
     return res.send(markup);

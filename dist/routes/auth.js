@@ -6,6 +6,7 @@ import bcrypt from 'bcrypt';
 const saltRounds = 10;
 import passport from 'passport';
 import { checkNotAuthReturnIndex, checkNotAuthReturnMarkup, checkAuthReturnMarkup } from '../middleware/checkAuth.js';
+import i18next from '../i18n.js';
 router.get('/register', checkNotAuthReturnMarkup, function (req, res, next) {
     let template = pug.compileFile('views/register.pug');
     let markup = template({ error_message: '' });
@@ -41,22 +42,18 @@ router.post('/register', checkNotAuthReturnMarkup, function (req, res, next) {
     }).catch((err) => { return next(err); });
 });
 router.get('/login', checkNotAuthReturnMarkup, function (req, res, next) {
+    let template = pug.compileFile('views/login.pug');
+    let markup = '';
     if (!req.session || !req.session.messages ||
         !req.session.messages || req.session.messages.length <= 0) {
-        let template = pug.compileFile('views/login.pug');
-        let markup = '';
-        markup = template();
-        return res.send(markup);
+        markup = template({ t: i18next.t });
     }
     else {
         const lastErrorIndex = req.session.messages.length - 1;
         const lastErrorMessage = req.session.messages[lastErrorIndex];
-        //let template = pug.compileFile('views/login.pug', { t: i18n.t });
-        //let markup = template({ error_message: lastErrorMessage });
-        //const markup = pug.renderFile('views/login.pug', { t: i18next.t })
-        let markup = '';
-        return res.send(markup);
+        markup = template({ t: i18next.t, error_message: lastErrorMessage });
     }
+    return res.send(markup);
 });
 router.post('/login', checkNotAuthReturnIndex, passport.authenticate('local', {
     successRedirect: '/swipe',
