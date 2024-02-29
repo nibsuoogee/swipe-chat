@@ -1,5 +1,5 @@
 const testLoginResponse = (email, password) => {
-  cy.request('POST', 'http://localhost:3000/user/login', {
+  cy.request('POST', 'http://localhost:3000/auth/login', {
     email: email,
     password: password
   })

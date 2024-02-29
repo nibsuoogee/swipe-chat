@@ -1,6 +1,6 @@
 section.main(data-cy="profile-view")
   div.bg-content.max-w-sm.rounded.overflow-hidden.shadow-lg.px-8.pt-6.pb-8.mb-4
-    form.py-4(hx-post="/user/edit-username/", hx-swap="outerHTML", hx-target=".main") 
+    form.py-4(hx-post="/profile/edit-username/", hx-swap="outerHTML", hx-target=".main") 
       h1.block.text-text.mb-2.py-3.text-3xl Edit your information
       if error_message
         div.mb-4
@@ -11,7 +11,7 @@ section.main(data-cy="profile-view")
       div.flex.items-center.justify-between
         button.px-2.py-4.rounded.bg-accent-1.text-content.font-bold(class="hover:bg-accent-2", type="submit", name="submit") Change username
 
-    form.py-4(hx-post="/user/edit-password/", hx-swap="outerHTML", hx-target=".main") 
+    form.py-4(hx-post="/profile/edit-password/", hx-swap="outerHTML", hx-target=".main") 
       div.mb-4
         label.block.text-text.mb-2(for="password") New password:
         input.px-2.py-3.shadow.appearance-none.border(class="focus:outline-none focus:shadow-outline", type="password", name="password", placeholder="******************")
@@ -21,4 +21,4 @@ section.main(data-cy="profile-view")
       div.flex.items-center.justify-between
         button.px-2.py-4.rounded.bg-accent-1.text-content.font-bold(class="hover:bg-accent-2", type="submit", name="submit") Change password
     
-    h1.px-2.py-4.font-bold.text-red-700(data-cy="delete-profile", class="hover:text-red-900", hx-delete="/user/profile/", hx-swap="outerHTML", hx-target=".main", hx-trigger="click") Delete profile
+    h1.px-2.py-4.font-bold.text-red-700(data-cy="delete-profile", class="hover:text-red-900", hx-delete="/profile/", hx-swap="outerHTML", hx-target=".main", hx-trigger="click") Delete profile

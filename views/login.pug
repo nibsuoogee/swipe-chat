@@ -1,6 +1,6 @@
 section.main.sample-transition(data-cy="login-view")
-  div(hx-get="/user/menu", hx-swap="innerHTML transition:true", hx-target=".menu-div", hx-trigger="load")
-  form.bg-content.max-w-sm.rounded.overflow-hidden.shadow-lg.px-8.pt-6.pb-8.mb-4(hx-post="/user/login", hx-swap="outerHTML", hx-target=".main")
+  div(hx-get="/menu", hx-swap="innerHTML transition:true", hx-target=".menu-div", hx-trigger="load")
+  form.bg-content.max-w-sm.rounded.overflow-hidden.shadow-lg.px-8.pt-6.pb-8.mb-4(hx-post="/auth/login", hx-swap="outerHTML", hx-target=".main")
     if error_message
       div.mb-4
         p.text-red-500.px-6.py-4 #{error_message}
@@ -14,6 +14,6 @@ section.main.sample-transition(data-cy="login-view")
     div.flex.items-center.justify-between
       button.px-2.py-4.rounded.bg-accent-1.text-content.font-bold(data-cy="login", class="hover:bg-accent-2", type="submit", name="submit") Login
       label.block.text-text.mb-2 or
-      button.px-2.py-4.rounded.bg-text.text-content.font-bold(data-cy="login-register", class="hover:bg-accent-2", hx-get="/user/register", hx-swap="outerHTML transition:true", hx-target=".main") Register
+      button.px-2.py-4.rounded.bg-text.text-content.font-bold(data-cy="login-register", class="hover:bg-accent-2", hx-get="/auth/register", hx-swap="outerHTML transition:true", hx-target=".main") Register
     
       

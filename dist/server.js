@@ -5,33 +5,20 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import passport from 'passport';
 import session from 'express-session';
+import authRouter from './routes/auth.js';
+import imagesRouter from './routes/images.js';
 import indexRouter from './routes/index.js';
+import messagingRouter from './routes/messaging.js';
+import profileRouter from './routes/profile.js';
+import swipeRouter from './routes/swipe.js';
+import { getUserByEmail, getUserById } from './middleware/checkAuth.js';
 const app = express();
-import User from './models/User.js';
 import mongoose from 'mongoose';
 const mongoDB = 'mongodb://127.0.0.1:27017/testdb';
 mongoose.connect(mongoDB);
 mongoose.Promise = Promise;
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error'));
-async function getUserByEmail(email) {
-    try {
-        const user = await User.findOne({ email: email });
-        return user;
-    }
-    catch (err) {
-        return null;
-    }
-}
-async function getUserById(id) {
-    try {
-        const user = await User.findOne({ id: id });
-        return user;
-    }
-    catch (err) {
-        return null;
-    }
-}
 import initializePassport from './passport-config.js';
 initializePassport(passport, getUserByEmail, getUserById);
 app.use(session({
@@ -55,18 +42,21 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use('/assets', express.static(path.join(__dirname, '/public/assets')));
 app.use('/javascripts', express.static(path.join(__dirname, '/javascripts')));
 app.use('/uploads', express.static(path.join(__dirname, '/public/uploads')));
+app.use('/auth', authRouter);
+app.use('/images', imagesRouter);
 app.use('/', indexRouter);
+app.use('/messaging', messagingRouter);
+app.use('/profile', profileRouter);
+app.use('/swipe', swipeRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     next(createError(404));
 });
 // error handler
 app.use(function (err, req, res, next) {
-    // set locals, only providing error in development
     console.error(err);
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
-    // render the error page
     return res.status(500).render('error');
 });
 export default app;

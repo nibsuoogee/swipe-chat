@@ -1,7 +1,7 @@
 section.main.outline-4.min-w-96.bg-content.rounded-xl
   h1.block.text-text.mb-2.py-3.px-4.text-xl Matches
   div.divide-y.divide-gray-300
-    p(hx-get="/user/chats", hx-swap="outerHTML", hx-target="this", hx-trigger="load")
+    p(hx-get="/messaging/chats", hx-swap="outerHTML", hx-target="this", hx-trigger="load")
   section.chat-area
     if friend_id
-      p(hx-get="/user/chat/"+ friend_id, hx-swap="outerHTML transition:true", hx-target=".chat-area", hx-trigger="load")
+      p(hx-get="/messaging/chat/"+ friend_id, hx-swap="outerHTML transition:true", hx-target=".chat-area", hx-trigger="load")

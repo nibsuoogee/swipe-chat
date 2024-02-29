@@ -5,12 +5,17 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import passport from 'passport';
 import session from 'express-session';
+
+import authRouter from './routes/auth.js';
+import imagesRouter from './routes/images.js';
 import indexRouter from './routes/index.js';
+import messagingRouter from './routes/messaging.js';
+import profileRouter from './routes/profile.js';
+import swipeRouter from './routes/swipe.js';
+
+import { getUserByEmail, getUserById } from './middleware/checkAuth.js';
 
 const app: Express = express();
-
-import User, { IUser } from './models/User.js'
-import Chat from './models/Chat.js';
 
 import mongoose, { Types } from 'mongoose';
 const mongoDB = 'mongodb://127.0.0.1:27017/testdb';
@@ -18,24 +23,6 @@ mongoose.connect(mongoDB);
 mongoose.Promise = Promise;
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error'));
-
-async function getUserByEmail(email: string) {
-  try {
-    const user: IUser | null = await User.findOne({ email: email });
-    return user;
-  } catch (err) {
-    return null;
-  }
-}
-
-async function getUserById(id: string) {
-  try {
-    const user: IUser | null = await User.findOne({ id: id });
-    return user;
-  } catch (err) {
-    return null;
-  }
-}
 
 import initializePassport from './passport-config.js';
 initializePassport(passport, getUserByEmail, getUserById);
@@ -68,7 +55,12 @@ app.use('/assets', express.static(path.join(__dirname, '/public/assets')));
 app.use('/javascripts', express.static(path.join(__dirname, '/javascripts')));
 app.use('/uploads', express.static(path.join(__dirname, '/public/uploads')));
 
+app.use('/auth', authRouter);
+app.use('/images', imagesRouter);
 app.use('/', indexRouter);
+app.use('/messaging', messagingRouter);
+app.use('/profile', profileRouter);
+app.use('/swipe', swipeRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req: Request, res: Response, next: NextFunction) {
@@ -77,12 +69,10 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
 
 // error handler
 app.use(function (err: Error, req: Request, res: Response, next: NextFunction) {
-  // set locals, only providing error in development
   console.error(err);
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
   return res.status(500).render('error');
 });
 

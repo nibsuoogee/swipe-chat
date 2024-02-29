@@ -17,7 +17,7 @@ html.no-scrollbar(lang='en')
           svg.w-10.fill-text.absolute(viewBox="0 0 500 500")
             path(xmlns="http://www.w3.org/2000/svg", d="M 342.795 281.69 C 342.795 281.69 100.203 405.031 308.534 445.622 C 516.864 486.216 464.585 433.388 445.555 396.665 C 426.525 359.94 379.768 371.003 379.768 388.4 C 379.768 405.795 348.485 448.522 331.363 406.962 C 314.241 365.4 313.296 342.204 353.247 356.702 C 393.2 371.198 398.907 307.411 383.686 292.913 C 368.462 278.414 351.121 278.842 342.795 281.69 Z")
         div.menu-div
-          p(hx-get="/user/menu", hx-swap="outerHTML", hx-target="this", hx-trigger="load")
+          p(hx-get="/menu", hx-swap="outerHTML", hx-target="this", hx-trigger="load")
         div
           label.h-16(class="inline-flex items-center cursor-pointer")
             input#toggle-dark-mode(type="checkbox" onclick="toggleDarkMode()" value="" class="sr-only peer")
@@ -26,5 +26,5 @@ html.no-scrollbar(lang='en')
 
     div.bg-container
       div.bg-image
-      p(hx-get="/user/swipe", hx-swap="outerHTML", hx-target="this", hx-trigger="load")
+      p(hx-get="/swipe", hx-swap="outerHTML", hx-target="this", hx-trigger="load")
     

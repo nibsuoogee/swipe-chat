@@ -5,12 +5,12 @@ section.chat-area.bg-neutral-900.grid.grid-rows-6.justify-center.rounded
       p.block.text-text.text-xs.flex.justify-center.items-center Last edited: #{last_edited}
   section.row-span-4.h-64.overflow-hidden
     div.chat-feed.flex.flex-col.h-full.overflow-auto.scrollbar-thin.scrollbar-thumb-text.scrollbar-track-neutral-900.scroll-smooth
-      h1(hx-get="/user/messages/"+ friend_id, 
+      h1(hx-get="/messaging/messages/"+ friend_id, 
         hx-swap="outerHTML", 
         hx-target="this", 
         hx-trigger="load")
 
-  form.max-w-sm.rounded.overflow-hidden.p-4(hx-post="/user/send-chat/"+ friend_id, 
+  form.max-w-sm.rounded.overflow-hidden.p-4(hx-post="/messaging/send-chat/"+ friend_id, 
     hx-swap="innerHTML", 
     hx-target=".chat-feed")
     div.flex.items-center.justify-between.gap-4

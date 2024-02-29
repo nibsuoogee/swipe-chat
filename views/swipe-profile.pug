@@ -16,8 +16,8 @@ section.swipe-profile
         h1.block.text-white.mb-2.py-3.text-3xl.font-bold #{username}
       
     div.flex.items-center.justify-between.divide-x.divide-gray-300.mb-1(class="absolute bottom-0 left-1/2 transform -translate-x-1/2", style="width: 200px; height: 100px;")
-      svg.w-15.h-15.fill-text(data-cy="like-profile", viewBox="0 -960 960 960", hx-post="/user/like/"+ id, hx-swap="outerHTML transition:true", hx-target=".swipe-profile", hx-trigger="click")
+      svg.w-15.h-15.fill-text(data-cy="like-profile", viewBox="0 -960 960 960", hx-post="/swipe/like/"+ id, hx-swap="outerHTML transition:true", hx-target=".swipe-profile", hx-trigger="click")
         path(xmlns="http://www.w3.org/2000/svg", d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z", class="hover:fill-lime-500")
-      svg.w-15.h-15.fill-text(viewBox="0 -960 960 960", hx-get="/user/new-swipe-profile", hx-swap="outerHTML transition:true", hx-target=".swipe-profile", hx-trigger="click")
+      svg.w-15.h-15.fill-text(viewBox="0 -960 960 960", hx-get="/swipe/new-swipe-profile", hx-swap="outerHTML transition:true", hx-target=".swipe-profile", hx-trigger="click")
         path(xmlns="http://www.w3.org/2000/svg", d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z", class="hover:fill-red-700")
   

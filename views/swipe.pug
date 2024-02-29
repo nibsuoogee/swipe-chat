@@ -1,7 +1,7 @@
 section.main.sample-transition.min-h-screen.w-full.flex.justify-center.items-center(data-cy="swipe-view")
-  div(hx-get="/user/menu", hx-swap="innerHTML transition:true", hx-target=".menu-div", hx-trigger="load")
+  div(hx-get="/menu", hx-swap="innerHTML transition:true", hx-target=".menu-div", hx-trigger="load")
   div.match-start-chat.w-full.mt-8.text-center.absolute.top-0
   div.w-64.h-96.relative.inset-0.flex.justify-center.items-center
-    h1.swipe-profile(hx-get="/user/new-swipe-profile", hx-swap="outerHTML", hx-target="this", hx-trigger="load") Profile comes here
+    h1.swipe-profile(hx-get="/swipe/new-swipe-profile", hx-swap="outerHTML", hx-target="this", hx-trigger="load") Profile comes here
   
     

@@ -4,16 +4,13 @@ function initialize(passport, getUserByEmail, getUserById) {
     const verifyCallback = async (email, password, done) => {
         const user = await getUserByEmail(email);
         if (!user) {
-            console.log('User not found');
-            return done(null, false);
+            return done(null, false, { message: 'Incorrect username or password.' });
         }
         try {
             if (await bcrypt.compare(password, user.password)) {
-                console.log('user: ' + user.email + ' logged in!');
                 return done(null, user);
             }
             else {
-                console.log('Password incorrect');
                 return done(null, false, { message: 'Incorrect username or password.' });
             }
         }
