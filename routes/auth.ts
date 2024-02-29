@@ -10,6 +10,7 @@ import {
   checkNotAuthReturnMarkup,
   checkAuthReturnMarkup
 } from '../middleware/checkAuth.js';
+import i18next from '../i18n.js';
 
 router.get('/register', checkNotAuthReturnMarkup, function (req, res, next) {
   let template = pug.compileFile('views/register.pug');
@@ -51,11 +52,11 @@ router.get('/login', checkNotAuthReturnMarkup, function (req: any, res, next) {
   let markup = '';
   if (!req.session || !req.session.messages ||
     !req.session.messages || req.session.messages.length <= 0) {
-    markup = template();
+    markup = template({ t: i18next.t });
   } else {
     const lastErrorIndex = req.session.messages.length - 1;
     const lastErrorMessage = req.session.messages[lastErrorIndex];
-    markup = template({ error_message: lastErrorMessage });
+    markup = template({ t: i18next.t, error_message: lastErrorMessage });
   }
   return res.send(markup);
 });

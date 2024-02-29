@@ -1,26 +1,29 @@
-import { Router, Request, Response, NextFunction, ErrorRequestHandler } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import User, { IUser } from '../models/User.js'
 import pug from 'pug';
 import { Types } from 'mongoose';
+import i18next from '../i18n.js';
 
-
-export function checkAuthReturnIndex(req: Request, res: Response, next: NextFunction) {
+export function checkAuthReturnIndex(req: Request,
+  res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
     return next()
   }
   return res.render('index');
 }
 
-export function checkAuthReturnMarkup(req: Request, res: Response, next: NextFunction) {
+export function checkAuthReturnMarkup(req: Request,
+  res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
     return next()
   }
   let template = pug.compileFile('views/login.pug');
-  let markup = template();
+  let markup = template({ t: i18next.t });
   return res.send(markup);
 }
 
-export function checkAuthReturnNothing(req: Request, res: Response, next: NextFunction) {
+export function checkAuthReturnNothing(req: Request,
+  res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
     return next()
   }
@@ -28,14 +31,16 @@ export function checkAuthReturnNothing(req: Request, res: Response, next: NextFu
   return res.send(markup);
 }
 
-export function checkNotAuthReturnIndex(req: Request, res: Response, next: NextFunction) {
+export function checkNotAuthReturnIndex(req: Request,
+  res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
     return res.render('index');
   }
   return next()
 }
 
-export function checkNotAuthReturnMarkup(req: Request, res: Response, next: NextFunction) {
+export function checkNotAuthReturnMarkup(req: Request,
+  res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
     let template = pug.compileFile('views/swipe.pug');
     let markup = template();

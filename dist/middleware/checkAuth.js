@@ -1,5 +1,6 @@
 import User from '../models/User.js';
 import pug from 'pug';
+import i18next from '../i18n.js';
 export function checkAuthReturnIndex(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
@@ -10,8 +11,10 @@ export function checkAuthReturnMarkup(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
+    console.log("i18next.t('Login')");
+    console.log(i18next.t('Login'));
     let template = pug.compileFile('views/login.pug');
-    let markup = template();
+    let markup = template({ t: i18next.t });
     return res.send(markup);
 }
 export function checkAuthReturnNothing(req, res, next) {

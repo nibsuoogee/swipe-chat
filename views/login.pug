@@ -4,7 +4,7 @@ section.main.sample-transition(data-cy="login-view")
     if error_message
       div.mb-4
         p.text-red-500.px-6.py-4 #{error_message}
-    h1.block.text-text.mb-2.py-3.text-3xl Login
+    h1.block.text-text.mb-2.py-3.text-3xl=t('Login')
     div.mb-4
       label.block.text-text.mb-2(for="email") Email
       input.px-2.py-3.shadow.appearance-none.border(data-cy="login-email", class="focus:outline-none focus:shadow-outline", type="email", name="email", placeholder="first.last@mail.com")
