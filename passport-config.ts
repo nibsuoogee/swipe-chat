@@ -3,13 +3,15 @@ import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from 'bcrypt';
 import { PassportStatic, DoneCallback } from 'passport';
 import User, { IUser } from './models/User.js'
+import { Types } from 'mongoose';
 
 function initialize(passport: PassportStatic,
   getUserByEmail: (email: string) => Promise<IUser | null>,
-  getUserById: (id: string) => Promise<IUser | null>) {
+  getUserById: (_id: Types.ObjectId) => Promise<IUser | null>) {
   const verifyCallback = async (email: string, password: string, done: any) => {
     const user: IUser | null = await getUserByEmail(email);
-
+    console.log('user')
+    console.log(user)
     if (!user) {
       return done(null, false, { message: 'Incorrect username or password.' })
     }
@@ -29,13 +31,16 @@ function initialize(passport: PassportStatic,
     passwordField: 'password'
   }, verifyCallback))
   passport.serializeUser(function (user: any, done) {
-    done(null, user.id);
+    done(null, user._id);
   });
-  passport.deserializeUser(async function (id: string, done) {
+  passport.deserializeUser(async function (_id: Types.ObjectId, done) {
     try {
-      const user = await getUserById(id);
+      const user = await getUserById(_id);
+      console.log('const user = await getUserById(_id):')
+      console.log(user)
       return done(null, user);
     } catch (error) {
+      console.log(error)
       return done(error);
     }
   });

@@ -18,14 +18,14 @@ router.get('/', checkAuthReturnMarkup, function (req, res, next) {
 });
 router.get('/new-swipe-profile', checkAuthReturnMarkup, function (req, res, next) {
     const user = req.user;
-    if (!user || !user.id || !user.friends) {
+    if (!user || !user._id || !user.friends) {
         return res.send();
     }
     User.find({
         $and: [
-            { 'id': { $nin: user.likes } },
-            { 'id': { $nin: user.friends } },
-            { 'id': { $ne: user.id } }
+            { _id: { $nin: user.likes } },
+            { _id: { $nin: user.friends } },
+            { _id: { $ne: user._id } }
         ]
     }).then((users) => {
         if (users.length > 0) {
@@ -38,7 +38,7 @@ router.get('/new-swipe-profile', checkAuthReturnMarkup, function (req, res, next
             let markup = template({
                 images: images,
                 username: users[random_profile].user_name,
-                id: users[random_profile].id
+                id: users[random_profile]._id
             });
             return res.send(markup);
         }
@@ -51,36 +51,36 @@ router.get('/new-swipe-profile', checkAuthReturnMarkup, function (req, res, next
 });
 router.post('/like/:id', checkAuthReturnMarkup, function (req, res, next) {
     const user = req.user;
-    if (!user || !user.id) {
+    if (!user || !user._id) {
         res.set('HX-Location', JSON.stringify({
             'path': '/swipe/new-swipe-profile', 'target': '.swipe-profile'
         }));
         return res.send();
     }
-    User.findOne({ 'id': req.params.id }).then((friend) => {
+    User.findOne({ _id: req.params.id }).then((friend) => {
         if (friend) {
-            User.updateOne({ 'id': user.id }, {
-                $push: { 'likes': friend.id }
+            User.updateOne({ _id: user._id }, {
+                $push: { 'likes': friend._id }
             }).catch((err) => {
                 return next(err);
             });
-            const match = friend.likes.includes(user.id);
+            const match = friend.likes.includes(user._id);
             if (match) {
-                User.updateOne({ 'id': user.id }, {
-                    $push: { 'friends': friend.id }
+                User.updateOne({ _id: user._id }, {
+                    $push: { 'friends': friend._id }
                 }).catch((err) => {
                     return next(err);
                 });
-                User.updateOne({ 'id': friend.id }, {
-                    $push: { 'friends': user.id }
+                User.updateOne({ _id: friend._id }, {
+                    $push: { 'friends': user._id }
                 }).catch((err) => {
                     return next(err);
                 });
-                initializeChat(user.id, friend.id);
+                initializeChat(user._id, friend._id);
                 let template = pug.compileFile('views/match-start-chat.pug');
                 let markup = template({
                     match_name: friend.user_name,
-                    friend_id: friend.id
+                    friend_id: friend._id
                 });
                 res.set('HX-Retarget', '.match-start-chat');
                 res.set('HX-Reswap', 'innerHTML transition:true');
@@ -100,7 +100,6 @@ router.post('/like/:id', checkAuthReturnMarkup, function (req, res, next) {
 export async function initializeChat(id1, id2) {
     try {
         const chat = await new Chat({
-            id: Math.floor(Math.random() * 1000),
             participant_ids: [id1, id2],
             messages: [],
             last_edited: new Date()
@@ -117,7 +116,7 @@ export async function initializeChat(id1, id2) {
 }
 export async function addChatToUser(userid, chatid) {
     try {
-        const match = await User.updateOne({ 'id': userid }, { $push: { 'chat_ids': chatid } });
+        const match = await User.updateOne({ _id: userid }, { $push: { 'chat_ids': chatid } });
         if (match.modifiedCount > 0) {
             return;
         }

@@ -4,6 +4,7 @@ import pug from 'pug';
 import User, { IUser } from '../models/User.js'
 import Chat, { IChat, IMessage } from '../models/Chat.js';
 import { checkAuthReturnMarkup } from '../middleware/checkAuth.js';
+import { Types } from 'mongoose';
 
 router.get('/', checkAuthReturnMarkup, function (req, res, next) {
   let template = pug.compileFile('views/swipe.pug');
@@ -17,75 +18,76 @@ router.get('/', checkAuthReturnMarkup, function (req, res, next) {
   return res.send(markup);
 });
 
-router.get('/new-swipe-profile', checkAuthReturnMarkup, function (req, res, next) {
-  const user = req.user as IUser | null;
-  if (!user || !user.id || !user.friends) {
-    return res.send();
-  }
-
-  User.find({
-    $and: [
-      { 'id': { $nin: user.likes } },
-      { 'id': { $nin: user.friends } },
-      { 'id': { $ne: user.id } }]
-  }).then((users) => {
-    if (users.length > 0) {
-      const random_profile = Math.floor(Math.random() * users.length);
-      let template = pug.compileFile('views/swipe-profile.pug');
-      let images = users[random_profile].images;
-      if (users[random_profile].images.length < 1) {
-        images.push('default.png');
-      }
-      let markup = template({
-        images: images,
-        username: users[random_profile].user_name,
-        id: users[random_profile].id
-      });
-      return res.send(markup);
-    } else {
-      let template = pug.compileFile('views/swipe-profile-error.pug');
-      let markup = template();
-      return res.send(markup);
+router.get('/new-swipe-profile', checkAuthReturnMarkup,
+  function (req, res, next) {
+    const user = req.user as IUser | null;
+    if (!user || !user._id || !user.friends) {
+      return res.send();
     }
-  }).catch((err) => { return next(err); });
-});
+
+    User.find({
+      $and: [
+        { _id: { $nin: user.likes } },
+        { _id: { $nin: user.friends } },
+        { _id: { $ne: user._id } }]
+    }).then((users) => {
+      if (users.length > 0) {
+        const random_profile = Math.floor(Math.random() * users.length);
+        let template = pug.compileFile('views/swipe-profile.pug');
+        let images = users[random_profile].images;
+        if (users[random_profile].images.length < 1) {
+          images.push('default.png');
+        }
+        let markup = template({
+          images: images,
+          username: users[random_profile].user_name,
+          id: users[random_profile]._id
+        });
+        return res.send(markup);
+      } else {
+        let template = pug.compileFile('views/swipe-profile-error.pug');
+        let markup = template();
+        return res.send(markup);
+      }
+    }).catch((err) => { return next(err); });
+  });
 
 router.post('/like/:id', checkAuthReturnMarkup, function (req, res, next) {
   const user = req.user as IUser | null;
-  if (!user || !user.id) {
+  if (!user || !user._id) {
     res.set('HX-Location', JSON.stringify({
       'path': '/swipe/new-swipe-profile', 'target': '.swipe-profile'
     }));
     return res.send();
   }
 
-  User.findOne({ 'id': req.params.id }).then((friend) => {
+  User.findOne({ _id: req.params.id }).then((friend) => {
     if (friend) {
-      User.updateOne({ 'id': user.id },
+      User.updateOne({ _id: user._id },
         {
-          $push: { 'likes': friend.id }
+          $push: { 'likes': friend._id }
         }).catch((err) => {
           return next(err);
         });
-      const match = friend.likes.includes(user.id);
+      const match = friend.likes.includes(user._id);
       if (match) {
-        User.updateOne({ 'id': user.id },
+        User.updateOne({ _id: user._id },
           {
-            $push: { 'friends': friend.id }
+            $push: { 'friends': friend._id }
           }).catch((err) => {
             return next(err);
           });
-        User.updateOne({ 'id': friend.id },
+        User.updateOne({ _id: friend._id },
           {
-            $push: { 'friends': user.id }
+            $push: { 'friends': user._id }
           }).catch((err) => {
             return next(err);
           });
-        initializeChat(user.id, friend.id);
+        initializeChat(user._id, friend._id);
         let template = pug.compileFile('views/match-start-chat.pug');
         let markup = template({
           match_name: friend.user_name,
-          friend_id: friend.id
+          friend_id: friend._id
         });
         res.set('HX-Retarget', '.match-start-chat');
         res.set('HX-Reswap', 'innerHTML transition:true');
@@ -102,10 +104,10 @@ router.post('/like/:id', checkAuthReturnMarkup, function (req, res, next) {
   }).catch((err) => { return next(err); });
 });
 
-export async function initializeChat(id1: string, id2: string) {
+export async function initializeChat(id1: Types.ObjectId,
+  id2: Types.ObjectId) {
   try {
     const chat = await new Chat({
-      id: Math.floor(Math.random() * 1000),
       participant_ids: [id1, id2],
       messages: [],
       last_edited: new Date()
@@ -121,9 +123,11 @@ export async function initializeChat(id1: string, id2: string) {
   }
 }
 
-export async function addChatToUser(userid: string, chatid: string) {
+export async function addChatToUser(userid: Types.ObjectId,
+  chatid: Types.ObjectId) {
   try {
-    const match = await User.updateOne({ 'id': userid }, { $push: { 'chat_ids': chatid } });
+    const match = await User.updateOne({ _id: userid },
+      { $push: { 'chat_ids': chatid } });
     if (match.modifiedCount > 0) {
       return;
     } else {

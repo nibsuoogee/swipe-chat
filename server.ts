@@ -1,5 +1,5 @@
 import createError from 'http-errors';
-import express, { Express, Request, Response, NextFunction, ErrorRequestHandler } from "express"
+import express, { Express, Request, Response, NextFunction } from "express"
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
@@ -17,7 +17,7 @@ import { getUserByEmail, getUserById } from './middleware/checkAuth.js';
 
 const app: Express = express();
 
-import mongoose, { Types } from 'mongoose';
+import mongoose from 'mongoose';
 const mongoDB = 'mongodb://127.0.0.1:27017/testdb';
 mongoose.connect(mongoDB);
 mongoose.Promise = Promise;

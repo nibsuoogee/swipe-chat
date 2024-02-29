@@ -46,7 +46,7 @@ export async function getUserByEmail(email) {
 }
 export async function getUserById(id) {
     try {
-        const user = await User.findOne({ id: id });
+        const user = await User.findOne({ _id: id });
         return user;
     }
     catch (err) {

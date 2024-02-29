@@ -2,28 +2,23 @@ import { Schema, Document, model, Types } from 'mongoose';
 
 export interface IMessage {
   text: string;
-  sender_id: string;
+  sender_id: Types.ObjectId;
   date: Date;
 }
 
 export interface IChat {
-  id: string;
-  participant_ids: String[];
+  _id: Types.ObjectId;
+  participant_ids: Types.ObjectId[];
   messages: IMessage[];
   last_edited: Date;
 }
 
 const chatSchema = new Schema<IChat>({
-  id: {
-    type: String,
-    unique: true,
-    required: true
-  },
-  participant_ids: [String],
+  participant_ids: [Types.ObjectId],
   messages: [
     {
       text: String,
-      sender_id: String,
+      sender_id: Types.ObjectId,
       date: Date,
     }
   ],

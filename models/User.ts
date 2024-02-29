@@ -1,23 +1,18 @@
 import { Schema, Document, model, Types } from 'mongoose';
 
 export interface IUser {
-  id: string;
+  _id: Types.ObjectId;
   is_admin: boolean;
   user_name: string;
   email: string;
   password: string;
   images: String[];
-  likes: String[];
-  friends: String[];
-  chat_ids: String[];
+  likes: Types.ObjectId[];
+  friends: Types.ObjectId[];
+  chat_ids: Types.ObjectId[];
 }
 
 const userSchema = new Schema<IUser>({
-  id: {
-    type: String,
-    unique: true,
-    required: true
-  },
   is_admin: Boolean,
   user_name: {
     type: String,
@@ -34,9 +29,9 @@ const userSchema = new Schema<IUser>({
     required: true
   },
   images: [{ type: String }],
-  likes: [{ type: String, ref: 'User' }],
-  friends: [{ type: String, ref: 'User' }],
-  chat_ids: [{ type: String, ref: 'Chat' }]
+  likes: [{ type: Types.ObjectId }],
+  friends: [{ type: Types.ObjectId }],
+  chat_ids: [{ type: Types.ObjectId }]
 })
 
 export default model<IUser>('User', userSchema);

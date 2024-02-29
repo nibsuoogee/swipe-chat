@@ -1,15 +1,10 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Types } from 'mongoose';
 const chatSchema = new Schema({
-    id: {
-        type: String,
-        unique: true,
-        required: true
-    },
-    participant_ids: [String],
+    participant_ids: [Types.ObjectId],
     messages: [
         {
             text: String,
-            sender_id: String,
+            sender_id: Types.ObjectId,
             date: Date,
         }
     ],

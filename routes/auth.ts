@@ -27,7 +27,6 @@ router.post('/register', checkNotAuthReturnMarkup, function (req, res, next) {
       bcrypt.genSalt(saltRounds, function (err, salt) {
         bcrypt.hash(req.body.password, salt, function (err, hash) {
           new User({
-            id: Math.floor(Math.random() * 1000),
             user_name: req.body.username,
             email: req.body.email,
             password: hash,
@@ -50,7 +49,8 @@ router.post('/register', checkNotAuthReturnMarkup, function (req, res, next) {
 router.get('/login', checkNotAuthReturnMarkup, function (req: any, res, next) {
   let template = pug.compileFile('views/login.pug');
   let markup = '';
-  if (!req.session || !req.session.messages || !req.session.messages || req.session.messages.length <= 0) {
+  if (!req.session || !req.session.messages ||
+    !req.session.messages || req.session.messages.length <= 0) {
     markup = template();
   } else {
     const lastErrorIndex = req.session.messages.length - 1;

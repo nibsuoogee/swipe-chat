@@ -1,6 +1,8 @@
 import { Router, Request, Response, NextFunction, ErrorRequestHandler } from 'express';
 import User, { IUser } from '../models/User.js'
 import pug from 'pug';
+import { Types } from 'mongoose';
+
 
 export function checkAuthReturnIndex(req: Request, res: Response, next: NextFunction) {
   if (req.isAuthenticated()) {
@@ -51,9 +53,9 @@ export async function getUserByEmail(email: string) {
   }
 }
 
-export async function getUserById(id: string) {
+export async function getUserById(id: Types.ObjectId) {
   try {
-    const user: IUser | null = await User.findOne({ id: id });
+    const user: IUser | null = await User.findOne({ _id: id });
     return user;
   } catch (err) {
     return null;

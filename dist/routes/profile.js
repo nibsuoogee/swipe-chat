@@ -19,19 +19,25 @@ router.get('/', checkAuthReturnMarkup, function (req, res, next) {
 router.post('/edit-username/', checkAuthReturnMarkup, async function (req, res, next) {
     let template = pug.compileFile('views/profile.pug');
     const user = req.user;
-    if (!user || !user.user_name || !user.id) {
-        let markup = template({ username: '', error_message: 'An error occured' });
+    if (!user || !user.user_name || !user._id) {
+        let markup = template({
+            username: '',
+            error_message: 'An error occured'
+        });
         return res.send(markup);
     }
     User.findOne({ user_name: req.body.username }).then((user) => {
         if (user) {
-            let markup = template({ username: user.user_name, error_message: 'Name occupied' });
+            let markup = template({
+                username: user.user_name,
+                error_message: 'Name occupied'
+            });
             return res.send(markup);
         }
     }).catch((err) => {
         return next(err);
     });
-    User.updateOne({ id: user.id }, { $set: { 'user_name': req.body.username } }).catch((err) => {
+    User.updateOne({ id: user._id }, { $set: { 'user_name': req.body.username } }).catch((err) => {
         return next(err);
     });
     let markup = template({ username: user.user_name });
@@ -40,17 +46,23 @@ router.post('/edit-username/', checkAuthReturnMarkup, async function (req, res, 
 router.post('/edit-password/', checkAuthReturnMarkup, async function (req, res, next) {
     let template = pug.compileFile('views/profile.pug');
     const user = req.user;
-    if (!user || !user.user_name || !user.id) {
-        let markup = template({ username: '', error_message: 'An error occured' });
+    if (!user || !user.user_name || !user._id) {
+        let markup = template({
+            username: '',
+            error_message: 'An error occured'
+        });
         return res.send(markup);
     }
     if (req.body.password !== req.body.passwordagain) {
-        let markup = template({ username: user.user_name, error_message: 'Passwords must match' });
+        let markup = template({
+            username: user.user_name,
+            error_message: 'Passwords must match'
+        });
         return res.send(markup);
     }
     bcrypt.genSalt(saltRounds, function (err, salt) {
         bcrypt.hash(req.body.password, salt, function (err, hash) {
-            User.updateOne({ id: user.id }, { $set: { 'password': hash } }).catch((err) => {
+            User.updateOne({ id: user._id }, { $set: { 'password': hash } }).catch((err) => {
                 return next(err);
             });
         });
@@ -61,14 +73,14 @@ router.post('/edit-password/', checkAuthReturnMarkup, async function (req, res, 
 router.delete('/', checkAuthReturnMarkup, async function (req, res, next) {
     let template = pug.compileFile('views/profile.pug');
     const user = req.user;
-    if (!user || !user.user_name || !user.id) {
+    if (!user || !user.user_name || !user._id) {
         let markup = template({ username: '', error_message: 'An error occured' });
         return res.send(markup);
     }
     user.friends.forEach((friend) => {
-        removeMatch(user.id, friend, next);
+        removeMatch(user._id, friend, next);
     });
-    User.deleteOne({ id: user.id }).catch((err) => {
+    User.deleteOne({ id: user._id }).catch((err) => {
         next(err);
     });
     template = pug.compileFile('views/login.pug');

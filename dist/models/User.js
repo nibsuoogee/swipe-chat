@@ -1,10 +1,5 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Types } from 'mongoose';
 const userSchema = new Schema({
-    id: {
-        type: String,
-        unique: true,
-        required: true
-    },
     is_admin: Boolean,
     user_name: {
         type: String,
@@ -21,8 +16,8 @@ const userSchema = new Schema({
         required: true
     },
     images: [{ type: String }],
-    likes: [{ type: String, ref: 'User' }],
-    friends: [{ type: String, ref: 'User' }],
-    chat_ids: [{ type: String, ref: 'Chat' }]
+    likes: [{ type: Types.ObjectId }],
+    friends: [{ type: Types.ObjectId }],
+    chat_ids: [{ type: Types.ObjectId }]
 });
 export default model('User', userSchema);
