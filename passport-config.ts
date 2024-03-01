@@ -10,8 +10,6 @@ function initialize(passport: PassportStatic,
   getUserById: (_id: Types.ObjectId) => Promise<IUser | null>) {
   const verifyCallback = async (email: string, password: string, done: any) => {
     const user: IUser | null = await getUserByEmail(email);
-    console.log('user')
-    console.log(user)
     if (!user) {
       return done(null, false, { message: 'Incorrect username or password.' })
     }
@@ -36,11 +34,8 @@ function initialize(passport: PassportStatic,
   passport.deserializeUser(async function (_id: Types.ObjectId, done) {
     try {
       const user = await getUserById(_id);
-      console.log('const user = await getUserById(_id):')
-      console.log(user)
       return done(null, user);
     } catch (error) {
-      console.log(error)
       return done(error);
     }
   });

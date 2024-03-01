@@ -14,7 +14,7 @@ import i18next from '../i18n.js';
 
 router.get('/register', checkNotAuthReturnMarkup, function (req, res, next) {
   let template = pug.compileFile('views/register.pug');
-  let markup = template({ error_message: '' });
+  let markup = template({ t: i18next.t });
   res.send(markup);
 });
 
@@ -22,7 +22,10 @@ router.post('/register', checkNotAuthReturnMarkup, function (req, res, next) {
   User.findOne({ email: req.body.email }).then((email) => {
     if (email) {
       let template = pug.compileFile('views/register.pug');
-      let markup = template({ error_message: 'Email already in use' });
+      let markup = template({
+        t: i18next.t,
+        error_message: i18next.t('Email') + ' ' + i18next.t('in use')
+      });
       return res.send(markup);
     } else {
       bcrypt.genSalt(saltRounds, function (err, salt) {
@@ -34,11 +37,14 @@ router.post('/register', checkNotAuthReturnMarkup, function (req, res, next) {
             is_admin: false
           }).save().then(() => {
             let template = pug.compileFile('views/login.pug');
-            let markup = template();
+            let markup = template({ t: i18next.t });
             return res.send(markup);
           }).catch((err) => {
             let template = pug.compileFile('views/register.pug');
-            let markup = template({ error_message: 'Username already in use' });
+            let markup = template({
+              t: i18next.t,
+              error_message: i18next.t('Username') + ' ' + i18next.t('in use')
+            });
             return res.send(markup);
           });
         });
@@ -72,7 +78,7 @@ router.post('/logout', checkAuthReturnMarkup, function (req, res, next) {
       return next(err);
     }
     let template = pug.compileFile('views/login.pug');
-    let markup = template({ error_message: '' });
+    let markup = template({ t: i18next.t, error_message: '' });
     return res.send(markup);
   });
 });

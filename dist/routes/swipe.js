@@ -9,10 +9,10 @@ router.get('/', checkAuthReturnMarkup, function (req, res, next) {
     let markup;
     const user = req.user;
     if (user && user.user_name) {
-        markup = template({ username: user.user_name });
+        markup = template({ t: res.locals.t, username: user.user_name });
     }
     else {
-        markup = template({ username: 'Guest' });
+        markup = template({ t: res.locals.t, username: 'Guest' });
     }
     return res.send(markup);
 });
@@ -36,6 +36,7 @@ router.get('/new-swipe-profile', checkAuthReturnMarkup, function (req, res, next
                 images.push('default.png');
             }
             let markup = template({
+                t: res.locals.t,
                 images: images,
                 username: users[random_profile].user_name,
                 id: users[random_profile]._id
@@ -44,7 +45,7 @@ router.get('/new-swipe-profile', checkAuthReturnMarkup, function (req, res, next
         }
         else {
             let template = pug.compileFile('views/swipe-profile-error.pug');
-            let markup = template();
+            let markup = template({ t: res.locals.t });
             return res.send(markup);
         }
     }).catch((err) => { return next(err); });
@@ -79,6 +80,7 @@ router.post('/like/:id', checkAuthReturnMarkup, function (req, res, next) {
                 initializeChat(user._id, friend._id);
                 let template = pug.compileFile('views/match-start-chat.pug');
                 let markup = template({
+                    t: res.locals.t,
                     match_name: friend.user_name,
                     friend_id: friend._id
                 });

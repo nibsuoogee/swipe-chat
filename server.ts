@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import passport from 'passport';
 import session from 'express-session';
+import i18nToLocals from './middleware/i18nToLocals.js';
 
 import authRouter from './routes/auth.js';
 import imagesRouter from './routes/images.js';
@@ -44,6 +45,8 @@ const __dirname = path.dirname(__filename);
 
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'pug');
+
+app.use(i18nToLocals);
 
 app.use(logger('dev'));
 app.use(express.json());

@@ -3,8 +3,6 @@ import bcrypt from 'bcrypt';
 function initialize(passport, getUserByEmail, getUserById) {
     const verifyCallback = async (email, password, done) => {
         const user = await getUserByEmail(email);
-        console.log('user');
-        console.log(user);
         if (!user) {
             return done(null, false, { message: 'Incorrect username or password.' });
         }
@@ -30,12 +28,9 @@ function initialize(passport, getUserByEmail, getUserById) {
     passport.deserializeUser(async function (_id, done) {
         try {
             const user = await getUserById(_id);
-            console.log('const user = await getUserById(_id):');
-            console.log(user);
             return done(null, user);
         }
         catch (error) {
-            console.log(error);
             return done(error);
         }
     });

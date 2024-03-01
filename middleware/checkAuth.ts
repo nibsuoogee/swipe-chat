@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from 'express';
 import User, { IUser } from '../models/User.js'
 import pug from 'pug';
 import { Types } from 'mongoose';
-import i18next from '../i18n.js';
 
 export function checkAuthReturnIndex(req: Request,
   res: Response, next: NextFunction) {
@@ -18,7 +17,7 @@ export function checkAuthReturnMarkup(req: Request,
     return next()
   }
   let template = pug.compileFile('views/login.pug');
-  let markup = template({ t: i18next.t });
+  let markup = template({ t: res.locals.t });
   return res.send(markup);
 }
 

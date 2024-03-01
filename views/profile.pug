@@ -1,24 +1,24 @@
 section.main(data-cy="profile-view")
   div.bg-content.max-w-sm.rounded.overflow-hidden.shadow-lg.px-8.pt-6.pb-8.mb-4
     form.py-4(hx-post="/profile/edit-username/", hx-swap="outerHTML", hx-target=".main") 
-      h1.block.text-text.mb-2.py-3.text-3xl Edit your information
+      h1.block.text-text.mb-2.py-3.text-3xl=t('Edit your information')
       if error_message
         div.mb-4
-          p.text-text.px-6.py-4 Error: #{error_message}.
+          p.text-text.px-6.py-4 #{error_message}
       div.mb-4
-        label.block.text-text.mb-2(for="username") Current username is #{username}. New username:
-        input.px-2.py-3.shadow.appearance-none.border(class="focus:outline-none focus:shadow-outline", type="text", name="username", placeholder="username")
+        label.block.text-text.mb-2(for="username") #{t('Current username is')} #{username}. #{t('New')} #{t('Username').toLowerCase()}:
+        input.px-2.py-3.shadow.appearance-none.border(class="focus:outline-none focus:shadow-outline", type="text", name="username", placeholder=t('Username'))
       div.flex.items-center.justify-between
-        button.px-2.py-4.rounded.bg-accent-1.text-content.font-bold(class="hover:bg-accent-2", type="submit", name="submit") Change username
+        button.px-2.py-4.rounded.bg-accent-1.text-content.font-bold(class="hover:bg-accent-2", type="submit", name="submit") #{t('Change')} #{t('Username').toLowerCase()}
 
     form.py-4(hx-post="/profile/edit-password/", hx-swap="outerHTML", hx-target=".main") 
       div.mb-4
-        label.block.text-text.mb-2(for="password") New password:
+        label.block.text-text.mb-2(for="password") #{t('New')} #{t('Password').toLowerCase()}:
         input.px-2.py-3.shadow.appearance-none.border(class="focus:outline-none focus:shadow-outline", type="password", name="password", placeholder="******************")
       div.mb-4
-        label.block.text-text.mb-2(for="passwordagain") New password again:
+        label.block.text-text.mb-2(for="passwordagain") #{t('New')} #{t('Password').toLowerCase()} #{t('again')}:
         input.px-2.py-3.shadow.appearance-none.border(class="focus:outline-none focus:shadow-outline", type="password", name="passwordagain", placeholder="******************")
       div.flex.items-center.justify-between
-        button.px-2.py-4.rounded.bg-accent-1.text-content.font-bold(class="hover:bg-accent-2", type="submit", name="submit") Change password
+        button.px-2.py-4.rounded.bg-accent-1.text-content.font-bold(class="hover:bg-accent-2", type="submit", name="submit") #{t('Change')} #{t('Password').toLowerCase()}
     
-    h1.px-2.py-4.font-bold.text-red-700(data-cy="delete-profile", class="hover:text-red-900", hx-delete="/profile/", hx-swap="outerHTML", hx-target=".main", hx-trigger="click") Delete profile
+    h1.px-2.py-4.font-bold.text-red-700(data-cy="delete-profile", class="hover:text-red-900", hx-delete="/profile/", hx-swap="outerHTML", hx-target=".main", hx-trigger="click") #{t('Delete')} #{t('Profile').toLowerCase()}

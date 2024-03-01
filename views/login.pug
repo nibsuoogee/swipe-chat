@@ -6,14 +6,14 @@ section.main.sample-transition(data-cy="login-view")
         p.text-red-500.px-6.py-4 #{error_message}
     h1.block.text-text.mb-2.py-3.text-3xl=t('Login')
     div.mb-4
-      label.block.text-text.mb-2(for="email") Email
-      input.px-2.py-3.shadow.appearance-none.border(data-cy="login-email", class="focus:outline-none focus:shadow-outline", type="email", name="email", placeholder="first.last@mail.com")
+      label.block.text-text.mb-2(for="email")=t('Email')
+      input.px-2.py-3.shadow.appearance-none.border(data-cy="login-email", class="focus:outline-none focus:shadow-outline", type="email", name="email", placeholder=t("placeholder-email"))
     div.mb-6
-      label.block.text-text.mb-2(for="password") Password
+      label.block.text-text.mb-2(for="password")=t('Password')
       input.px-2.py-3.shadow.appearance-none.border(data-cy="login-password", class="focus:outline-none focus:shadow-outline", type="password", name="password", placeholder="******************")
     div.flex.items-center.justify-between
-      button.px-2.py-4.rounded.bg-accent-1.text-content.font-bold(data-cy="login", class="hover:bg-accent-2", type="submit", name="submit") Login
-      label.block.text-text.mb-2 or
-      button.px-2.py-4.rounded.bg-text.text-content.font-bold(data-cy="login-register", class="hover:bg-accent-2", hx-get="/auth/register", hx-swap="outerHTML transition:true", hx-target=".main") Register
+      button.px-2.py-4.rounded.bg-accent-1.text-content.font-bold(data-cy="login", class="hover:bg-accent-2", type="submit", name="submit")=t('Login')
+      label.block.text-text.mb-2=t('or')
+      button.px-2.py-4.rounded.bg-text.text-content.font-bold(data-cy="login-register", class="hover:bg-accent-2", hx-get="/auth/register", hx-swap="outerHTML transition:true", hx-target=".main")=t('Register')
     
       

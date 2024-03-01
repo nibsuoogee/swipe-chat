@@ -8,15 +8,16 @@ import {
   checkAuthReturnMarkup,
   getUserById
 } from '../middleware/checkAuth.js';
+import i18next from '../i18n.js';
 
 router.get('/', checkAuthReturnMarkup, function (req, res, next) {
   let template = pug.compileFile('views/image.pug');
   const user = req.user as IUser | null;
   if (!user || !user.images) {
-    let markup = template({ images: [] });
+    let markup = template({ t: i18next.t, images: [] });
     return res.send(markup);
   }
-  let markup = template({ images: user.images });
+  let markup = template({ t: i18next.t, images: user.images });
   return res.send(markup);
 });
 
@@ -24,7 +25,10 @@ router.post('/upload-image', checkAuthReturnMarkup, (req, res, next) => {
   const template = pug.compileFile('views/image.pug');
   const user = req.user as IUser | null;
   if (!user || !user.user_name || !user._id) {
-    let markup = template({ status_message: 'Image upload failed' });
+    let markup = template({
+      t: i18next.t,
+      status_message: i18next.t('Image upload failed')
+    });
     return res.send(markup);
   }
 
@@ -32,8 +36,9 @@ router.post('/upload-image', checkAuthReturnMarkup, (req, res, next) => {
     upload(req, res, async function (err) {
       if (err instanceof multer.MulterError) {
         const markup = template({
+          t: i18next.t,
           images: user.images,
-          status_message: 'Image upload failed: ' + err.code
+          status_message: i18next.t('Image upload failed') + ': ' + err.code
         });
         return res.send(markup);
       }
@@ -49,16 +54,18 @@ router.post('/upload-image', checkAuthReturnMarkup, (req, res, next) => {
         throw new Error('Failed to fetch user');
       }
       const markup = template({
+        t: i18next.t,
         images: updated_user.images,
-        status_message: 'Image uploaded'
+        status_message: i18next.t('Image uploaded')
       });
       return res.send(markup);
 
     });
   } catch (err) {
     const markup = template({
+      t: i18next.t,
       images: user.images,
-      status_message: 'Image upload failed'
+      status_message: i18next.t('Image upload failed')
     });
     return res.send(markup);
   }
@@ -79,12 +86,16 @@ router.post('/remove-image/:image', checkAuthReturnMarkup,
         throw new Error('Failed to fetch user');
       }
       const markup = template({
+        t: i18next.t,
         images: user.images,
-        status_message: 'Image removed'
+        status_message: i18next.t('Image removed')
       });
       return res.send(markup);
     } catch (err) {
-      const markup = template({ status_message: 'Image removal failed' });
+      const markup = template({
+        t: i18next.t,
+        status_message: i18next.t('Image removal failed')
+      });
       return res.send(markup);
     }
   });

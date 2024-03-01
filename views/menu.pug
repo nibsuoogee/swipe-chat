@@ -4,18 +4,18 @@ section.menu
     svg.w-10.h-10.fill-text(data-cy="nav-swipe", hx-get="/swipe", hx-swap="outerHTML transition:true", hx-target=".main", hx-trigger="click", viewBox="0 -960 960 960", class="md:hidden",)
       path(xmlns="http://www.w3.org/2000/svg", d="M473-80q-24 0-46-9t-39-26L184-320l30-31q16-16 37.5-21.5t42.5.5l66 19v-327q0-17 11.5-28.5T400-720q17 0 28.5 11.5T440-680v433l-97-27 102 102q5 5 12.5 8.5T473-160h167q33 0 56.5-23.5T720-240v-160q0-17 11.5-28.5T760-440q17 0 28.5 11.5T800-400v160q0 66-47 113T640-80H473Zm7-280v-160q0-17 11.5-28.5T520-560q17 0 28.5 11.5T560-520v160h-80Zm120 0v-120q0-17 11.5-28.5T640-520q17 0 28.5 11.5T680-480v120h-80ZM80-680q30-106 142-173t258-67q94 0 181 31t159 90v-81h60v200H680v-60h116q-66-58-147-89t-169-31q-118 0-208.5 48T143-680H80Zm500 400Z", class="hover:fill-accent-2")
     
-    a(data-cy="nav-profile", hx-get="/profile", hx-swap="outerHTML transition:true", hx-target=".main", class="text-xl text-text hover:text-accent-2 hidden md:inline-block") Profile
+    a(data-cy="nav-profile", hx-get="/profile", hx-swap="outerHTML transition:true", hx-target=".main", class="text-xl text-text hover:text-accent-2 hidden md:inline-block")=t('Profile')
     svg.w-10.h-10.fill-text(data-cy="nav-profile", hx-get="/profile", hx-swap="outerHTML transition:true", hx-target=".main", hx-trigger="click",viewBox="0 -960 960 960", class="md:hidden")
       path(xmlns="http://www.w3.org/2000/svg", d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z", class="hover:fill-accent-2")
 
-    a(data-cy="nav-image", hx-get="/images", hx-swap="outerHTML transition:true", hx-target=".main", class="text-xl text-text hover:text-accent-2 hidden md:inline-block") Images
+    a(data-cy="nav-image", hx-get="/images", hx-swap="outerHTML transition:true", hx-target=".main", class="text-xl text-text hover:text-accent-2 hidden md:inline-block")=t('Images')
     svg.w-10.h-10.fill-text(data-cy="nav-image", hx-get="/images", hx-swap="outerHTML transition:true", hx-target=".main", hx-trigger="click",viewBox="0 -960 960 960", class="md:hidden")
       path(xmlns="http://www.w3.org/2000/svg", d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm40-80h480L570-480 450-320l-90-120-120 160Zm-40 80v-560 560Z", class="hover:fill-accent-2")
   
-    a(data-cy="nav-messaging", hx-get="/messaging", hx-swap="outerHTML transition:true", hx-target=".main", class="text-xl text-text hover:text-accent-2 hidden md:inline-block") Chat
+    a(data-cy="nav-messaging", hx-get="/messaging", hx-swap="outerHTML transition:true", hx-target=".main", class="text-xl text-text hover:text-accent-2 hidden md:inline-block")=t('Chat')
     svg.w-10.h-10.fill-text(data-cy="nav-messaging", hx-get="/messaging", hx-swap="outerHTML transition:true", hx-target=".main", hx-trigger="click",viewBox="0 -960 960 960", class="md:hidden")
       path(xmlns="http://www.w3.org/2000/svg", d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z", class="hover:fill-accent-2")
   
-    a(data-cy="nav-logout", hx-post="/auth/logout", hx-swap="outerHTML transition:true", hx-target=".main", class="text-xl text-text hover:text-accent-2 hidden md:inline-block") Logout
+    a(data-cy="nav-logout", hx-post="/auth/logout", hx-swap="outerHTML transition:true", hx-target=".main", class="text-xl text-text hover:text-accent-2 hidden md:inline-block")=t('Logout')
     svg.w-10.h-10.fill-text(data-cy="nav-logout", hx-post="/auth/logout", hx-swap="outerHTML transition:true", hx-target=".main", hx-trigger="click",viewBox="0 -960 960 960", class="md:hidden")
       path(xmlns="http://www.w3.org/2000/svg", d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z", class="hover:fill-accent-2")

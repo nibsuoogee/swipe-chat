@@ -3,17 +3,17 @@ section.main
     if error_message
       div.mb-4
         p.text-red-500.px-6.py-4 #{error_message}
-    h1.block.text-text.mb-2.py-3.text-3xl Register
+    h1.block.text-text.mb-2.py-3.text-3xl=t('Register')
     div.mb-4
-      label.block.text-text.mb-2(for="username") Username
-      input.px-2.py-3.shadow.appearance-none.border(data-cy="register-username", class="focus:outline-none focus:shadow-outline", type="text", name="username", placeholder="username")
+      label.block.text-text.mb-2(for="username")=t('Username')
+      input.px-2.py-3.shadow.appearance-none.border(data-cy="register-username", class="focus:outline-none focus:shadow-outline", type="text", name="username", placeholder=t('Username'))
     div.mb-4
-      label.block.text-text.mb-2(for="email") Email
-      input.px-2.py-3.shadow.appearance-none.border(data-cy="register-email", class="focus:outline-none focus:shadow-outline", type="email", name="email", placeholder="first.last@mail.com")
+      label.block.text-text.mb-2(for="email")=t('Email')
+      input.px-2.py-3.shadow.appearance-none.border(data-cy="register-email", class="focus:outline-none focus:shadow-outline", type="email", name="email", placeholder=t("placeholder-email"))
     div.mb-6
-      label.block.text-text.mb-2(for="password") Password
+      label.block.text-text.mb-2(for="password")=t('Password')
       input.px-2.py-3.shadow.appearance-none.border(data-cy="register-password", class="focus:outline-none focus:shadow-outline", type="password", name="password", placeholder="******************")
     div.flex.items-center.justify-between
-      button.px-2.py-4.rounded.bg-accent-1.text-content.font-bold(data-cy="register", class="hover:bg-accent-2", type="submit", name="submit") Register
-      label.block.text-text.mb-2 or
-      button.px-2.py-4.rounded.bg-text.text-content.font-bold(data-cy="register-login", class="hover:bg-accent-2", hx-get="/auth/login", hx-swap="outerHTML transition:true", hx-target=".main") Login
+      button.px-2.py-4.rounded.bg-accent-1.text-content.font-bold(data-cy="register", class="hover:bg-accent-2", type="submit", name="submit")=t('Register')
+      label.block.text-text.mb-2=t('or')
+      button.px-2.py-4.rounded.bg-text.text-content.font-bold(data-cy="register-login", class="hover:bg-accent-2", hx-get="/auth/login", hx-swap="outerHTML transition:true", hx-target=".main")=t('Login')

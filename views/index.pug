@@ -19,10 +19,13 @@ html.no-scrollbar(lang='en')
         div.menu-div
           p(hx-get="/menu", hx-swap="outerHTML", hx-target="this", hx-trigger="load")
         div
+          span.ms-3.text-text.text-xl(class="hover:text-accent-2", hx-post="/lang/en", hx-trigger="click") EN
+          span.ms-3.text-text.text-xl(class="hover:text-accent-2", hx-post="/lang/fi", hx-trigger="click") FI
+        div
           label.h-16(class="inline-flex items-center cursor-pointer")
             input#toggle-dark-mode(type="checkbox" onclick="toggleDarkMode()" value="" class="sr-only peer")
             div(class="relative w-11 h-6 bg-text border-text peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-accent-1")      
-            span.ms-3.text-text.text-xl(class="hidden md:inline-block") Dark mode
+            span.ms-3.text-text.text-xl(class="hidden md:inline-block")=t("Dark mode")
 
     div.bg-container
       div.bg-image

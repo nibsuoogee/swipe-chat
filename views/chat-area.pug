@@ -2,7 +2,7 @@ section.chat-area.bg-neutral-900.grid.grid-rows-6.justify-center.rounded
   div.grid.grid-rows-2
     h1.block.text-text.mb-2.text-xl.flex.justify-center.items-center #{friend}
     if last_edited
-      p.block.text-text.text-xs.flex.justify-center.items-center Last edited: #{last_edited}
+      p.block.text-text.text-xs.flex.justify-center.items-center #{t('Last edited')}: #{last_edited}
   section.row-span-4.h-64.overflow-hidden
     div.chat-feed.flex.flex-col.h-full.overflow-auto.scrollbar-thin.scrollbar-thumb-text.scrollbar-track-neutral-900.scroll-smooth
       h1(hx-get="/messaging/messages/"+ friend_id, 
@@ -15,4 +15,4 @@ section.chat-area.bg-neutral-900.grid.grid-rows-6.justify-center.rounded
     hx-target=".chat-feed")
     div.flex.items-center.justify-between.gap-4
       input.shadow.appearance-none.border.w-full(data-cy="chat-input", class="focus:outline-none focus:shadow-outline", type="text", name="chatInput")
-      button.px-4.rounded.bg-accent-1.text-content.font-bold(data-cy="chat-send",class="hover:bg-accent-2", type="submit", name="send") Send
+      button.px-4.rounded.bg-accent-1.text-content.font-bold(data-cy="chat-send",class="hover:bg-accent-2", type="submit", name="send")=('Send')

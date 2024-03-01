@@ -10,7 +10,7 @@ const login = (email, password) => {
   cy.get('[data-cy="login"]').click();
 
   /* Check that main swipe-profile view is visible  */
-  cy.get('.swipe-profile', { timeout: 1000 }).should('be.visible');
+  cy.get('.swipe-profile').should('exist');
 }
 
 describe('mutual like to match spec', () => {

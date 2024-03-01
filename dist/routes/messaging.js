@@ -4,14 +4,15 @@ import pug from 'pug';
 import User from '../models/User.js';
 import Chat from '../models/Chat.js';
 import { checkAuthReturnMarkup, getUserById } from '../middleware/checkAuth.js';
+import i18next from '../i18n.js';
 router.get('/', checkAuthReturnMarkup, function (req, res, next) {
     let template = pug.compileFile('views/messaging.pug');
-    let markup = template();
+    let markup = template({ t: i18next.t });
     return res.send(markup);
 });
 router.get('/jump-to-chat/:id', checkAuthReturnMarkup, function (req, res, next) {
     let template = pug.compileFile('views/messaging.pug');
-    let markup = template({ friend_id: req.params.id });
+    let markup = template({ t: i18next.t, friend_id: req.params.id });
     return res.send(markup);
 });
 router.get('/chats', checkAuthReturnMarkup, async function (req, res, next) {
@@ -19,7 +20,7 @@ router.get('/chats', checkAuthReturnMarkup, async function (req, res, next) {
     let markup = '';
     const user = req.user;
     if (!user || !user._id) {
-        let markup = template();
+        let markup = template({ t: i18next.t });
         return res.send(markup);
     }
     try {
@@ -27,12 +28,14 @@ router.get('/chats', checkAuthReturnMarkup, async function (req, res, next) {
             const friend = await User.findOne({ _id: id });
             if (friend && friend.images && friend.images.length > 0) {
                 markup += template({
+                    t: i18next.t,
                     image: friend.images[0],
                     username: friend.user_name, id: friend._id
                 });
             }
             else if (friend) {
                 markup += template({
+                    t: i18next.t,
                     image: 'default.png',
                     username: friend.user_name,
                     id: friend._id
@@ -51,7 +54,7 @@ router.get('/chat/:id', checkAuthReturnMarkup, async function (req, res, next) {
     let last_edited = null;
     const user = req.user;
     if (!user || !user._id) {
-        let markup = template({ username: '' });
+        let markup = template({ t: i18next.t, username: '' });
         return res.send(markup);
     }
     Chat.findOne({ participant_ids: { $all: [user._id, req.params.id] } }).then((chat) => {
@@ -67,6 +70,7 @@ router.get('/chat/:id', checkAuthReturnMarkup, async function (req, res, next) {
         if (friend) {
             if (last_edited) {
                 let markup = template({
+                    t: i18next.t,
                     friend: friend.user_name,
                     friend_id: friend._id,
                     last_edited: last_edited.toLocaleDateString('en-GB') + ' ' +
@@ -76,6 +80,7 @@ router.get('/chat/:id', checkAuthReturnMarkup, async function (req, res, next) {
             }
             else {
                 let markup = template({
+                    t: i18next.t,
                     friend: friend.user_name,
                     friend_id: friend._id
                 });
@@ -96,7 +101,7 @@ router.post('/remove-match/:id', checkAuthReturnMarkup, async function (req, res
     try {
         await removeMatch(user._id, req.params.id, next);
         let template = pug.compileFile('views/messaging.pug');
-        let markup = template();
+        let markup = template({ t: i18next.t });
         return res.send(markup);
     }
     catch (error) {
@@ -109,7 +114,7 @@ router.get('/messages/:id', checkAuthReturnMarkup, async function (req, res, nex
     const user = req.user;
     const friend = await getUserById(req.params.id);
     if (!user || !user._id || !friend || !friend._id) {
-        let markup = template({ username: '' });
+        let markup = template({ t: i18next.t, username: '' });
         return res.send(markup);
     }
     const name_dict = {};
@@ -122,6 +127,7 @@ router.get('/messages/:id', checkAuthReturnMarkup, async function (req, res, nex
                     const time = message.date.toTimeString().split(' ')[0].slice(0, 5);
                     if (time) {
                         markup += template({
+                            t: i18next.t,
                             sender_name: name_dict[message.sender_id.toString()],
                             text: message.text,
                             date: time
