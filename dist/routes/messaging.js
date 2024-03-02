@@ -124,10 +124,20 @@ router.get('/messages/:id', checkAuthReturnMarkup, async function (req, res, nex
         if (chat) {
             try {
                 chat.messages.forEach((message) => {
+                    console.log('message.sender_id');
+                    console.log(message.sender_id);
+                    console.log('user._id');
+                    console.log(user._id);
+                    let is_own_message = false;
+                    if (message.sender_id.equals(user._id)) {
+                        console.log('is the same!');
+                        is_own_message = true;
+                    }
                     const time = message.date.toTimeString().split(' ')[0].slice(0, 5);
                     if (time) {
                         markup += template({
                             t: i18next.t,
+                            is_own_message: is_own_message,
                             sender_name: name_dict[message.sender_id.toString()],
                             text: message.text,
                             date: time
@@ -170,8 +180,11 @@ router.post('/send-chat/:id', checkAuthReturnMarkup, async function (req, res, n
     });
     return res.send();
 });
+/*
+* Returns without waiting when match has been removed from initiator's matches
+*/
 export async function removeMatch(userid, friendid, next) {
-    User.findOne({ _id: friendid }).then((friend) => {
+    await User.findOne({ _id: friendid }).then((friend) => {
         if (friend) {
             User.updateOne({ _id: userid }, {
                 $pull: { 'likes': friend._id }

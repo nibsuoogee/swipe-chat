@@ -1,19 +1,20 @@
-section.main.sample-transition(data-cy="login-view")
+section.main.sample-transition(data-cy="login-view", class="w-full md:max-w-screen-md")
   div(hx-get="/menu", hx-swap="innerHTML transition:true", hx-target=".menu-div", hx-trigger="load")
-  form.bg-content.max-w-sm.rounded.overflow-hidden.shadow-lg.px-8.pt-6.pb-8.mb-4(hx-post="/auth/login", hx-swap="outerHTML", hx-target=".main")
+  form.bg-content.rounded.overflow-hidden.shadow-lg.px-8.pt-6.pb-8.mb-4(hx-post="/auth/login", hx-swap="outerHTML", hx-target=".main")
     if error_message
       div.mb-4
         p.text-red-500.px-6.py-4 #{error_message}
     h1.block.text-text.mb-2.py-3.text-3xl=t('Login')
     div.mb-4
       label.block.text-text.mb-2(for="email")=t('Email')
-      input.px-2.py-3.shadow.appearance-none.border(data-cy="login-email", class="focus:outline-none focus:shadow-outline", type="email", name="email", placeholder=t("placeholder-email"))
+      input.px-2.py-3.shadow.appearance-none.border(data-cy="login-email", class="focus:outline-none focus:shadow-outline", type="email", id="email", name="email", placeholder=t("placeholder-email"), autocomplete="on")
     div.mb-6
       label.block.text-text.mb-2(for="password")=t('Password')
-      input.px-2.py-3.shadow.appearance-none.border(data-cy="login-password", class="focus:outline-none focus:shadow-outline", type="password", name="password", placeholder="******************")
+      input.px-2.py-3.shadow.appearance-none.border(data-cy="login-password", class="focus:outline-none focus:shadow-outline", type="password", id="password", name="password", placeholder="******************", autocomplete="on")
     div.flex.items-center.justify-between
       button.px-2.py-4.rounded.bg-accent-1.text-content.font-bold(data-cy="login", class="hover:bg-accent-2", type="submit", name="submit")=t('Login')
-      label.block.text-text.mb-2=t('or')
-      button.px-2.py-4.rounded.bg-text.text-content.font-bold(data-cy="login-register", class="hover:bg-accent-2", hx-get="/auth/register", hx-swap="outerHTML transition:true", hx-target=".main")=t('Register')
+      div.flex.items-center.justify-between.gap-4
+        p.py-4.block.text-text=t('or')
+        button.px-2.py-4.rounded.bg-text.text-content.font-bold(data-cy="login-register", class="hover:bg-accent-2", hx-get="/auth/register", hx-swap="outerHTML transition:true", hx-target=".main")=t('Register')
     
       

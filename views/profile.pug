@@ -1,23 +1,23 @@
-section.main(data-cy="profile-view")
-  div.bg-content.max-w-sm.rounded.overflow-hidden.shadow-lg.px-8.pt-6.pb-8.mb-4
+section.main(data-cy="profile-view", class="w-full md:max-w-screen-md")
+  div.bg-content.rounded.overflow-hidden.shadow-lg.px-8.pt-6.pb-8.mb-4
     form.py-4(hx-post="/profile/edit-username/", hx-swap="outerHTML", hx-target=".main") 
       h1.block.text-text.mb-2.py-3.text-3xl=t('Edit your information')
       if error_message
         div.mb-4
-          p.text-text.px-6.py-4 #{error_message}
+          p.text-red-900.px-6.py-4 #{error_message}
       div.mb-4
         label.block.text-text.mb-2(for="username") #{t('Current username is')} #{username}. #{t('New')} #{t('Username').toLowerCase()}:
-        input.px-2.py-3.shadow.appearance-none.border(class="focus:outline-none focus:shadow-outline", type="text", name="username", placeholder=t('Username'))
+        input.px-2.py-3.shadow.appearance-none.border(class="focus:outline-none focus:shadow-outline", type="text", id="username", name="username", placeholder=t('Username'), autocomplete="off")
       div.flex.items-center.justify-between
         button.px-2.py-4.rounded.bg-accent-1.text-content.font-bold(class="hover:bg-accent-2", type="submit", name="submit") #{t('Change')} #{t('Username').toLowerCase()}
 
     form.py-4(hx-post="/profile/edit-password/", hx-swap="outerHTML", hx-target=".main") 
       div.mb-4
         label.block.text-text.mb-2(for="password") #{t('New')} #{t('Password').toLowerCase()}:
-        input.px-2.py-3.shadow.appearance-none.border(class="focus:outline-none focus:shadow-outline", type="password", name="password", placeholder="******************")
+        input.px-2.py-3.shadow.appearance-none.border(class="focus:outline-none focus:shadow-outline", type="password", id="password", name="password", placeholder="******************", autocomplete="off")
       div.mb-4
         label.block.text-text.mb-2(for="passwordagain") #{t('New')} #{t('Password').toLowerCase()} #{t('again')}:
-        input.px-2.py-3.shadow.appearance-none.border(class="focus:outline-none focus:shadow-outline", type="password", name="passwordagain", placeholder="******************")
+        input.px-2.py-3.shadow.appearance-none.border(class="focus:outline-none focus:shadow-outline", type="password", id="passwordagain", name="passwordagain", placeholder="******************", autocomplete="off")
       div.flex.items-center.justify-between
         button.px-2.py-4.rounded.bg-accent-1.text-content.font-bold(class="hover:bg-accent-2", type="submit", name="submit") #{t('Change')} #{t('Password').toLowerCase()}
     

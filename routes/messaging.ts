@@ -137,10 +137,15 @@ router.get('/messages/:id', checkAuthReturnMarkup,
       if (chat) {
         try {
           chat.messages.forEach((message: IMessage) => {
+            let is_own_message = false;
+            if (message.sender_id.equals(user._id)) {
+              is_own_message = true;
+            }
             const time = message.date.toTimeString().split(' ')[0].slice(0, 5);
             if (time) {
               markup += template({
                 t: i18next.t,
+                is_own_message: is_own_message,
                 sender_name: name_dict[message.sender_id.toString()],
                 text: message.text,
                 date: time
@@ -192,16 +197,22 @@ router.post('/send-chat/:id', checkAuthReturnMarkup,
     return res.send();
   });
 
+/*
+* Returns without waiting when match has been removed from initiator's matches
+*/
 export async function removeMatch(userid: Types.ObjectId,
   friendid: Types.ObjectId, next: NextFunction) {
-  User.findOne({ _id: friendid }).then((friend) => {
+
+  await User.findOne({ _id: friendid }).then((friend) => {
     if (friend) {
       User.updateOne({ _id: userid }, {
         $pull: { 'likes': friend._id }
       }).catch((err) => {
         return next(err);
       });
+
       const match = friend.likes.includes(userid);
+
       if (match) {
         User.updateOne({ _id: userid }, {
           $pull: { 'friends': friend._id }
@@ -210,11 +221,13 @@ export async function removeMatch(userid: Types.ObjectId,
         }).catch((err) => {
           return next(err);
         });
+
         User.updateOne({ _id: friend._id }, {
           $pull: { 'friends': userid }
         }).catch((err) => {
           return next(err);
         });
+
         removeChat(userid, friendid);
       }
     } else {

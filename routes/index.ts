@@ -29,4 +29,8 @@ router.post('/lang/:id', async function (req, res, next) {
   return res.send();
 });
 
+router.get('/favicon.ico', (req, res) => {
+  res.status(204).end();
+});
+
 export default router;

@@ -34,6 +34,8 @@ router.get('/new-swipe-profile', checkAuthReturnMarkup, function (req, res, next
             let images = users[random_profile].images;
             if (users[random_profile].images.length < 1) {
                 images.push('default.png');
+                images.push('wide.png');
+                images.push('tall.png');
             }
             let markup = template({
                 t: res.locals.t,

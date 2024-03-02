@@ -22,4 +22,7 @@ router.post('/lang/:id', async function (req, res, next) {
     res.set('HX-Redirect', '/');
     return res.send();
 });
+router.get('/favicon.ico', (req, res) => {
+    res.status(204).end();
+});
 export default router;

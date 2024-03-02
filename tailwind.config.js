@@ -13,6 +13,7 @@ export default {
         },
         content: 'hsl(var(--color-content) / <alpha-value>)',
         text: 'hsl(var(--color-text) / <alpha-value>)',
+        background: 'hsl(var(--color-background) / <alpha-value>)',
       }
     },
   },

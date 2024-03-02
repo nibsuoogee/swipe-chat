@@ -1,7 +1,8 @@
-section.main.outline-4.min-w-96.bg-content.rounded-xl
-  h1.block.text-text.mb-2.py-3.px-4.text-xl=t('Matches')
-  div.divide-y.divide-gray-300
-    p(hx-get="/messaging/chats", hx-swap="outerHTML", hx-target="this", hx-trigger="load")
-  section.chat-area
-    if friend_id
-      p(hx-get="/messaging/chat/"+ friend_id, hx-swap="outerHTML transition:true", hx-target=".chat-area", hx-trigger="load")
+section.main(data-cy="messaging-view", class="w-full md:max-w-screen-md")
+  div.bg-content.rounded.overflow-hidden.shadow-lg.px-8.pt-6.pb-8.mb-4
+    h1.block.text-text.mb-2.py-3.px-4.text-3xl=t('Matches')
+    div.divide-y.divide-background
+      p(hx-get="/messaging/chats", hx-swap="outerHTML", hx-target="this", hx-trigger="load")
+    section.chat-area
+      if friend_id
+        p(hx-get="/messaging/chat/"+ friend_id, hx-swap="outerHTML transition:true", hx-target=".chat-area", hx-trigger="load")

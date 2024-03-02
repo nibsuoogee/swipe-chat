@@ -1,5 +1,5 @@
-div
+div.flex.flex-col.items-center.justify-center
   div(hx-get="/swipe/new-swipe-profile", hx-swap="outerHTML", hx-target=".swipe-profile", hx-trigger="load") 
   h1.text-text.mb-2.py-3.text-5xl #{t('You matched')}!
-  button.px-2.py-4.rounded.bg-accent-1.text-text.font-bold(data-cy="chat-with-match", class="hover:bg-accent-2", 
+  button.px-2.py-4.rounded.bg-accent-1.text-white.font-bold(data-cy="chat-with-match", class="hover:bg-accent-2", 
     type="button", hx-get="/messaging/jump-to-chat/" + friend_id, hx-swap="outerHTML transition:true", hx-target=".main") #{t('Start chat with')} #{match_name} #{t('kanssa')}

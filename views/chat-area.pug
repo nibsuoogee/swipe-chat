@@ -1,16 +1,16 @@
-section.chat-area.bg-neutral-900.grid.grid-rows-6.justify-center.rounded
-  div.grid.grid-rows-2
-    h1.block.text-text.mb-2.text-xl.flex.justify-center.items-center #{friend}
+section.chat-area.bg-background.flex.flex-col.justify-center
+  div.flex.justify-center.items-center.flex-col.py-2
+    h1.block.text-text.mb-2.text-xl #{friend}
     if last_edited
-      p.block.text-text.text-xs.flex.justify-center.items-center #{t('Last edited')}: #{last_edited}
-  section.row-span-4.h-64.overflow-hidden
-    div.chat-feed.flex.flex-col.h-full.overflow-auto.scrollbar-thin.scrollbar-thumb-text.scrollbar-track-neutral-900.scroll-smooth
-      h1(hx-get="/messaging/messages/"+ friend_id, 
+      p.block.text-text.text-xs #{t('Last edited')}: #{last_edited}
+  section.overflow-hidden.outline-4(style="height: 50vh")
+    div.chat-feed.flex.flex-col.h-full.overflow-auto.scrollbar-thin.scrollbar-thumb-content.scrollbar-track-background.scroll-smooth 
+      div(hx-get="/messaging/messages/"+ friend_id, 
         hx-swap="outerHTML", 
         hx-target="this", 
         hx-trigger="load")
 
-  form.max-w-sm.rounded.overflow-hidden.p-4(hx-post="/messaging/send-chat/"+ friend_id, 
+  form.w-full.rounded.overflow-hidden.p-4(hx-post="/messaging/send-chat/"+ friend_id, 
     hx-swap="innerHTML", 
     hx-target=".chat-feed")
     div.flex.items-center.justify-between.gap-4

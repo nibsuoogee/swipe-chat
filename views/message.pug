@@ -1,5 +1,10 @@
-section.message.flex-none.p-2
-  div.text-text.p-2.bg-content.rounded-xl
-    strong #{sender_name}
-    p.text-text(data-cy="message-text") #{text}
-    p.text-text  #{date}
+if is_own_message
+  section.message.flex-none.p-2.w-fit.self-end.min-w-32
+    div.p-2.bg-accent-1.rounded-xl.flex.flex-col.items-end
+      p.text-white(data-cy="message-text") #{text}
+      p.text-white.self-start  #{date}
+else
+  section.message.flex-none.p-2.w-fit.self-start.min-w-32
+    div.p-2.bg-content.rounded-xl.flex.flex-col.items-start
+      p.text-text(data-cy="message-text") #{text}
+      p.text-text.self-end #{date}
