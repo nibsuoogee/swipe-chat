@@ -25,7 +25,6 @@ router.get('/new-swipe-profile', checkAuthReturnMarkup,
     if (!user || !user._id || !user.friends) {
       return res.send();
     }
-
     User.find({
       $and: [
         { _id: { $nin: user.likes } },
