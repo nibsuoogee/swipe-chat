@@ -3,18 +3,21 @@
 A chat web app for desktop and mobile screens, where meeting new people is as easy as a glance followed by a click. 
 
 Main views and functions:
-- Login
-- Register
-- Swipe
+
+/ [index router](https://github.com/nibsuoogee/swipe-chat/blob/main/routes/index.ts) [index.pug](https://github.com/nibsuoogee/swipe-chat/blob/main/views/index.pug)
+- Unauthenticated [auth router](https://github.com/nibsuoogee/swipe-chat/blob/main/routes/auth.ts) 
+  - Login [login.pug](https://github.com/nibsuoogee/swipe-chat/blob/main/views/login.pug)
+  - Register [register.pug](https://github.com/nibsuoogee/swipe-chat/blob/main/views/register.pug)
+- Swipe [swipe router](https://github.com/nibsuoogee/swipe-chat/blob/main/routes/swipe.ts) [swipe.pug](https://github.com/nibsuoogee/swipe-chat/blob/main/views/swipe.pug)
   - Other users' profiles will show up one by one
   - Like or dislike, if they like you back, a chat will be created
   - If you like someone who already likes you, an option to jump to the chat appears
-- Profile
+- Profile [profile router](https://github.com/nibsuoogee/swipe-chat/blob/main/routes/profile.ts) [profile.pug](https://github.com/nibsuoogee/swipe-chat/blob/main/views/profile.pug)
   - See your current username, change it if you wish
   - Change your password, input twice
-- Images
+- Images [images router](https://github.com/nibsuoogee/swipe-chat/blob/main/routes/images.ts) [image.pug](https://github.com/nibsuoogee/swipe-chat/blob/main/views/image.pug)
   - See your current images in a grid, add new ones
-- Messaging
+- Messaging [messaging router](https://github.com/nibsuoogee/swipe-chat/blob/main/routes/messaging.ts) [messaging.pug](https://github.com/nibsuoogee/swipe-chat/blob/main/views/messaging.pug)
   - Matches are listed, in pages of 10 if you are popular enough
   - Click on a match to open the chat window
     - 'Last edited' timestamp
