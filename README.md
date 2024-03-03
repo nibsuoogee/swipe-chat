@@ -51,6 +51,14 @@ Passport does the heavy lifting for user authentication and does not interfere w
 | Dark mode switch which changes the theme of every element in the application                                                                                                                                                                                                                                                                                                   | 3      |
 |                                                                                                                                                                                                                                                                                                                                                                          Total | 52     |
 
+## Usage
+
+- `npm run build` Compiles the TypeScript code and outputs them in the `/dist` directory
+
+- `npm run tw:watch` Continually compile Tailwind to `/dist/public/styles/style.css` when changing .pug files
+
+- `npx cypress open` Launches the Cypress client for testing
+
 ## Initial plan and ideation
 
 ![image](https://github.com/nibsuoogee/swipe-chat/assets/37696410/1a36d789-68d0-4c95-9f42-7466d1ac25f7)
