@@ -12,6 +12,15 @@
     <img src="https://svgur.com/i/943.svg" height="64" alt="PassportJS Logo">
 </div>
 
+
+HTMX was chosen to drive interaction in the application as it provides server-side rendering and a simplified form of communication between server and client. Omitting json, and simply relying on the transfer of markup to exchange state, many benefits in complexity management can be gained.
+
+Pug and TailwindCSS streamline the development of views and work very well together with HTMX markup.
+
+MongoDB exposes an abstracted interface for simple database queries in the express back end.
+
+Passport does the heavy lifting for user authentication and does not interfere with other middlewares.
+
 ## Testing
 
 <div class="image-row">
