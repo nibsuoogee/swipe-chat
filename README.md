@@ -2,6 +2,8 @@
 
 A chat web app for desktop and mobile screens, where meeting new people is as easy as a glance followed by a click. 
 
+[![Demo YouTube video](https://img.youtube.com/vi/2hCx-381JuE/0.jpg)](https://www.youtube.com/watch?v=2hCx-381JuE)
+
 Main views and functions:
 
 / [index router](https://github.com/nibsuoogee/swipe-chat/blob/main/routes/index.ts) [index.pug](https://github.com/nibsuoogee/swipe-chat/blob/main/views/index.pug)
