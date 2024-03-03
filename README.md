@@ -27,6 +27,14 @@ Passport does the heavy lifting for user authentication and does not interfere w
     <img src="https://www.cypress.io/images/layouts/cypress-logo.svg" height="64" alt="Cypress Logo">
 </div>
 
+<br>
+
+[`cypress/e2e/api`](https://github.com/nibsuoogee/swipe-chat/tree/main/cypress/e2e/api) Contains sets of unit tests for different routers and their routes
+
+[`cypress/e2e/e2e-general`](https://github.com/nibsuoogee/swipe-chat/tree/main/cypress/e2e/e2e-general) Contains general end-to-end tests for the main application functions
+
+[`cypress/e2e/component`](https://github.com/nibsuoogee/swipe-chat/tree/main/cypress/e2e/component)  Contains tests for different component views. Server-side rendering means api testing is more critical. 
+
 ## Assignment related features and requested points
 
 | Requirement                                                                                                                                                                                                                                                                                                                                                                    | Points |
