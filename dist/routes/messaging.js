@@ -88,8 +88,6 @@ router.get('/chats/:currentPage', checkAuthReturnMarkup, async function (req, re
     }
     return res.send(markup);
 });
-router.get('/chats/page/:id', checkAuthReturnMarkup, async function (req, res, next) {
-});
 router.get('/chat/:id', checkAuthReturnMarkup, async function (req, res, next) {
     let template = pug.compileFile('views/chat-area.pug');
     let last_edited = null;
