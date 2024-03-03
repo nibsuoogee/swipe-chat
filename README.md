@@ -1,5 +1,27 @@
 # Swipe Chat
 
+A chat web app for desktop and mobile screens, where meeting new people is as easy as a glance followed by a click. 
+
+Main views and functions:
+- Login
+- Register
+- Swipe
+  - Other users' profiles will show up one by one
+  - Like or dislike, if they like you back, a chat will be created
+  - If you like someone who already likes you, an option to jump to the chat appears
+- Profile
+  - See your current username, change it if you wish
+  - Change your password, input twice
+- Images
+  - See your current images in a grid, add new ones
+- Messaging
+  - Matches are listed, in pages of 10 if you are popular enough
+  - Click on a match to open the chat window
+    - 'Last edited' timestamp
+    - Send and receive messages
+    - Search for messages containing text using the magnifying glass
+- Logout
+
 ## Technologies
 
 <div class="image-row">
