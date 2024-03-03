@@ -1,8 +1,7 @@
 section.chat
-  div.grid.grid-cols-5.items-center.bg-content.gap-4.h-16(data-cy="open-chat", class="hover:bg-background", hx-get="/messaging/chat/"+ id, hx-swap="outerHTML transition:true", hx-target=".chat-area", hx-trigger="click")
-    div.flex.items-center.justify-center
+  div.flex.items-center.justify-between.bg-content.gap-4.h-16(data-cy="open-chat", class="hover:bg-background", hx-get="/messaging/chat/"+ id, hx-swap="innerHTML transition:true", hx-target=".messaging-content", hx-trigger="click")
+    div.flex.items-center.justify-center.gap-4
       image.p-1.h-16.w-16.rounded-full.object-cover(src="/uploads/"+image, alt="Profile image")  
-    div.col-span-3.flex.items-center.justify-start
       strong.px-2.text-xl.text-text #{username}
     svg.w-10.h-10.fill-text(data-cy="remove-match", viewBox="0 -960 960 960", hx-post="/messaging/remove-match/"+ id, hx-swap="outerHTML transition:true", hx-target=".main", hx-trigger="click")
         path(xmlns="http://www.w3.org/2000/svg", d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z", class="hover:fill-red-700")

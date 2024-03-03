@@ -8,5 +8,125 @@
     "username": "bob",
     "email": "bob@gmail.com",
     "password": "bob"
+  },
+  {
+    "username": "charlie",
+    "email": "charlie@gmail.com",
+    "password": "charlie"
+  },
+  {
+    "username": "david",
+    "email": "david@gmail.com",
+    "password": "david"
+  },
+  {
+    "username": "emma",
+    "email": "emma@gmail.com",
+    "password": "emma"
+  },
+  {
+    "username": "frank",
+    "email": "frank@gmail.com",
+    "password": "frank"
+  },
+  {
+    "username": "grace",
+    "email": "grace@gmail.com",
+    "password": "grace"
+  },
+  {
+    "username": "harry",
+    "email": "harry@gmail.com",
+    "password": "harry"
+  },
+  {
+    "username": "irene",
+    "email": "irene@gmail.com",
+    "password": "irene"
+  },
+  {
+    "username": "jack",
+    "email": "jack@gmail.com",
+    "password": "jack"
+  },
+  {
+    "username": "kate",
+    "email": "kate@gmail.com",
+    "password": "kate"
+  },
+  {
+    "username": "louis",
+    "email": "louis@gmail.com",
+    "password": "louis"
+  },
+  {
+    "username": "mary",
+    "email": "mary@gmail.com",
+    "password": "mary"
+  },
+  {
+    "username": "nancy",
+    "email": "nancy@gmail.com",
+    "password": "nancy"
+  },
+  {
+    "username": "oliver",
+    "email": "oliver@gmail.com",
+    "password": "oliver"
+  },
+  {
+    "username": "peter",
+    "email": "peter@gmail.com",
+    "password": "peter"
+  },
+  {
+    "username": "quinn",
+    "email": "quinn@gmail.com",
+    "password": "quinn"
+  },
+  {
+    "username": "rachel",
+    "email": "rachel@gmail.com",
+    "password": "rachel"
+  },
+  {
+    "username": "sarah",
+    "email": "sarah@gmail.com",
+    "password": "sarah"
+  },
+  {
+    "username": "tom",
+    "email": "tom@gmail.com",
+    "password": "tom"
+  },
+  {
+    "username": "ursula",
+    "email": "ursula@gmail.com",
+    "password": "ursula"
+  },
+  {
+    "username": "victor",
+    "email": "victor@gmail.com",
+    "password": "victor"
+  },
+  {
+    "username": "wanda",
+    "email": "wanda@gmail.com",
+    "password": "wanda"
+  },
+  {
+    "username": "xavier",
+    "email": "xavier@gmail.com",
+    "password": "xavier"
+  },
+  {
+    "username": "yvonne",
+    "email": "yvonne@gmail.com",
+    "password": "yvonne"
+  },
+  {
+    "username": "zoe",
+    "email": "zoe@gmail.com",
+    "password": "zoe"
   }
 ]

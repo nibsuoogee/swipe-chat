@@ -1,0 +1,3 @@
+h1.block.text-text.mb-2.py-3.px-4.text-3xl=t('Matches')
+  div.chats-list.divide-y.divide-background.flex.flex-col
+    p(hx-get="/messaging/chats/1", hx-swap="outerHTML", hx-target="this", hx-trigger="load")

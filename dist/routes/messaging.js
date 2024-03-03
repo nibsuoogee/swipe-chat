@@ -15,7 +15,10 @@ router.get('/jump-to-chat/:id', checkAuthReturnMarkup, function (req, res, next)
     let markup = template({ t: i18next.t, friend_id: req.params.id });
     return res.send(markup);
 });
-router.get('/chats', checkAuthReturnMarkup, async function (req, res, next) {
+router.get('/chats/:currentPage', checkAuthReturnMarkup, async function (req, res, next) {
+    const PAGE_SIZE = 10;
+    let currentPage = 1;
+    let pagerTemplate = pug.compileFile('views/chat-pager.pug');
     let template = pug.compileFile('views/chat.pug');
     let markup = '';
     const user = req.user;
@@ -23,31 +26,69 @@ router.get('/chats', checkAuthReturnMarkup, async function (req, res, next) {
         let markup = template({ t: i18next.t });
         return res.send(markup);
     }
+    const friendCount = user.friends.length;
+    const pages = Math.ceil(friendCount / PAGE_SIZE);
+    if (req.params.currentPage && !isNaN(Number(req.params.currentPage))) {
+        currentPage = Number(req.params.currentPage);
+    }
+    let prev_page_num = currentPage > 1 ? currentPage - 1 : undefined;
+    let next_page_num = currentPage < pages ? currentPage + 1 : undefined;
+    // Add optional pager to chats list if friends exceed page limit
+    if (friendCount > PAGE_SIZE) {
+        markup += pagerTemplate({
+            t: i18next.t,
+            current_page: currentPage,
+            max_page: pages,
+            prev_page_num,
+            next_page_num
+        });
+    }
     try {
-        let promises = user.friends.map(async (id) => {
-            const friend = await User.findOne({ _id: id });
-            if (friend && friend.images && friend.images.length > 0) {
-                markup += template({
-                    t: i18next.t,
-                    image: friend.images[0],
-                    username: friend.user_name, id: friend._id
-                });
+        let friends = Array(PAGE_SIZE).fill(null);
+        let promises = user.friends.map(async (id, index) => {
+            // Filter matches for by current page number
+            if (index < PAGE_SIZE * (currentPage - 1)) {
+                return;
             }
-            else if (friend) {
-                markup += template({
-                    t: i18next.t,
-                    image: 'default.png',
-                    username: friend.user_name,
-                    id: friend._id
-                });
+            if (index > PAGE_SIZE * currentPage - 1) {
+                return;
+            }
+            const friend = await User.findOne({ _id: id });
+            if (friend) {
+                friends[index - PAGE_SIZE * (currentPage - 1)] = friend;
             }
         });
         await Promise.all(promises);
-        return res.send(markup);
+        friends.forEach(friend => {
+            if (friend === null) {
+                return;
+            }
+            const image = friend.images && friend.images.length > 0 ?
+                friend.images[0] : 'default.png';
+            markup += template({
+                t: i18next.t,
+                image: image,
+                username: friend.user_name,
+                id: friend._id
+            });
+        });
     }
     catch (err) {
         return next(err);
     }
+    // Add optional pager again to bottom of list
+    if (friendCount > PAGE_SIZE) {
+        markup += pagerTemplate({
+            t: i18next.t,
+            current_page: currentPage,
+            max_page: pages,
+            prev_page_num,
+            next_page_num
+        });
+    }
+    return res.send(markup);
+});
+router.get('/chats/page/:id', checkAuthReturnMarkup, async function (req, res, next) {
 });
 router.get('/chat/:id', checkAuthReturnMarkup, async function (req, res, next) {
     let template = pug.compileFile('views/chat-area.pug');
@@ -57,7 +98,7 @@ router.get('/chat/:id', checkAuthReturnMarkup, async function (req, res, next) {
         let markup = template({ t: i18next.t, username: '' });
         return res.send(markup);
     }
-    Chat.findOne({ participant_ids: { $all: [user._id, req.params.id] } }).then((chat) => {
+    await Chat.findOne({ participant_ids: { $all: [user._id, req.params.id] } }).then((chat) => {
         if (chat) {
             last_edited = chat.last_edited;
         }
@@ -109,52 +150,15 @@ router.post('/remove-match/:id', checkAuthReturnMarkup, async function (req, res
     }
 });
 router.get('/messages/:id', checkAuthReturnMarkup, async function (req, res, next) {
-    const template = pug.compileFile('views/message.pug');
-    let markup = '';
-    const user = req.user;
-    const friend = await getUserById(req.params.id);
-    if (!user || !user._id || !friend || !friend._id) {
-        let markup = template({ t: i18next.t, username: '' });
-        return res.send(markup);
+    let filter = '';
+    getMessages(filter, req, res, next);
+});
+router.post('/messages-filter/:id', checkAuthReturnMarkup, async function (req, res, next) {
+    let filter = '';
+    if (req.body.searchInput) {
+        filter = req.body.searchInput;
     }
-    const name_dict = {};
-    name_dict[user._id.toString()] = user.user_name;
-    name_dict[friend._id.toString()] = friend.user_name;
-    Chat.findOne({ participant_ids: { $all: [user._id, req.params.id] } }).then((chat) => {
-        if (chat) {
-            try {
-                chat.messages.forEach((message) => {
-                    console.log('message.sender_id');
-                    console.log(message.sender_id);
-                    console.log('user._id');
-                    console.log(user._id);
-                    let is_own_message = false;
-                    if (message.sender_id.equals(user._id)) {
-                        console.log('is the same!');
-                        is_own_message = true;
-                    }
-                    const time = message.date.toTimeString().split(' ')[0].slice(0, 5);
-                    if (time) {
-                        markup += template({
-                            t: i18next.t,
-                            is_own_message: is_own_message,
-                            sender_name: name_dict[message.sender_id.toString()],
-                            text: message.text,
-                            date: time
-                        });
-                    }
-                });
-                return res.send(markup);
-            }
-            catch (err) {
-                return next(err);
-            }
-        }
-        else {
-            const error = new Error('chat not found');
-            return next(error);
-        }
-    }).catch((err) => { return next(err); });
+    getMessages(filter, req, res, next);
 });
 router.post('/send-chat/:id', checkAuthReturnMarkup, async function (req, res, next) {
     res.set('HX-Location', JSON.stringify({
@@ -180,6 +184,52 @@ router.post('/send-chat/:id', checkAuthReturnMarkup, async function (req, res, n
     });
     return res.send();
 });
+export async function getMessages(filter, req, res, next) {
+    const template = pug.compileFile('views/message.pug');
+    let markup = '';
+    const user = req.user;
+    const friend = await getUserById(req.params.id);
+    if (!user || !user._id || !friend || !friend._id) {
+        let markup = template({ t: i18next.t, username: '' });
+        return res.send(markup);
+    }
+    const name_dict = {};
+    name_dict[user._id.toString()] = user.user_name;
+    name_dict[friend._id.toString()] = friend.user_name;
+    Chat.findOne({ participant_ids: { $all: [user._id, req.params.id] } }).then((chat) => {
+        if (chat) {
+            try {
+                chat.messages.forEach((message) => {
+                    if (!message.text.includes(filter)) {
+                        return;
+                    }
+                    let is_own_message = false;
+                    if (message.sender_id.equals(user._id)) {
+                        is_own_message = true;
+                    }
+                    const time = message.date.toTimeString().split(' ')[0].slice(0, 5);
+                    if (time) {
+                        markup += template({
+                            t: i18next.t,
+                            is_own_message: is_own_message,
+                            sender_name: name_dict[message.sender_id.toString()],
+                            text: message.text,
+                            date: time
+                        });
+                    }
+                });
+                return res.send(markup);
+            }
+            catch (err) {
+                return next(err);
+            }
+        }
+        else {
+            const error = new Error('chat not found');
+            return next(error);
+        }
+    }).catch((err) => { return next(err); });
+}
 /*
 * Returns without waiting when match has been removed from initiator's matches
 */

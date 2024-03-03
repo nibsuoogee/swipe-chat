@@ -32,5 +32,9 @@
   "New": "Uusi",
   "again": "uudelleen",
   "Delete": "Poista",
-  "No more profiles": "Tilit loppuivat"
+  "No more profiles": "Tilit loppuivat",
+  "Previous": "Edellinen",
+  "Page": "Sivu",
+  "Next": "Seuraava",
+  "Back to matches": "Takaisin yhteyslistaan"
 }

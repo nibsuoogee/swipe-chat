@@ -1,0 +1,10 @@
+div.flex.items-center.justify-between.px-4
+  if prev_page_num
+    h1.text-sm.text-text(class="hover:text-accent-2", hx-get="/messaging/chats/" + prev_page_num, hx-swap="innerHTML", hx-target=".chats-list") #{t('Previous')}
+  else
+    h1.text-sm.text-text #{t('Previous')}
+  h1.text-sm.text-text #{t('Page')} #{current_page} / #{max_page}
+  if next_page_num
+    h1.text-sm.text-text(class="hover:text-accent-2", hx-get="/messaging/chats/" + next_page_num, hx-swap="innerHTML", hx-target=".chats-list") #{t('Next')}
+  else
+    h1.text-sm.text-text #{t('Next')}

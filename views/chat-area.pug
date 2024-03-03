@@ -1,18 +1,59 @@
-section.chat-area.bg-background.flex.flex-col.justify-center
-  div.flex.justify-center.items-center.flex-col.py-2
-    h1.block.text-text.mb-2.text-xl #{friend}
-    if last_edited
-      p.block.text-text.text-xs #{t('Last edited')}: #{last_edited}
-  section.overflow-hidden.outline-4(style="height: 50vh")
-    div.chat-feed.flex.flex-col.h-full.overflow-auto.scrollbar-thin.scrollbar-thumb-content.scrollbar-track-background.scroll-smooth 
-      div(hx-get="/messaging/messages/"+ friend_id, 
-        hx-swap="outerHTML", 
-        hx-target="this", 
-        hx-trigger="load")
+section.chat-area.flex.flex-col.justify-center
+  h1.text-md.text-text.p-4(class="hover:text-accent-2", hx-get="/messaging", hx-swap="outerHTML transition:true", hx-target=".main", hx-trigger="click") #{t('Back to matches')}
+  div.bg-background
+    div.flex.justify-center.items-center.flex-col.py-2
+      h1.block.text-text.mb-2.text-3xl #{friend}
+      if last_edited
+        p.block.text-text.text-xs #{t('Last edited')}: #{last_edited}
+    section.overflow-hidden.outline-4(style="height: 50vh")
+      div.chat-feed.flex.flex-col.h-full.overflow-auto.scrollbar-thin.scrollbar-thumb-content.scrollbar-track-background.scroll-smooth 
+        div(hx-get="/messaging/messages/"+ friend_id, 
+          hx-swap="outerHTML", 
+          hx-target="this", 
+          hx-trigger="load")
 
-  form.w-full.rounded.overflow-hidden.p-4(hx-post="/messaging/send-chat/"+ friend_id, 
-    hx-swap="innerHTML", 
-    hx-target=".chat-feed")
-    div.flex.items-center.justify-between.gap-4
-      input.shadow.appearance-none.border.w-full(data-cy="chat-input", class="focus:outline-none focus:shadow-outline", type="text", name="chatInput")
-      button.px-4.rounded.bg-accent-1.text-content.font-bold(data-cy="chat-send",class="hover:bg-accent-2", type="submit", name="send")=('Send')
+    div.h-auto.flex.flex-col.items-center
+      form.w-full.rounded.overflow-hidden.p-2(
+        hx-post="/messaging/messages-filter/"+ friend_id, 
+        hx-swap="innerHTML", 
+        hx-target=".chat-feed")
+        div.flex.flex-row-reverse.items-center.justify-between.gap-4
+          button#search-submit.shrink-1.w-18.px-4.rounded.bg-accent-1.text-white.font-bold(class="hidden opacity-0 hover:bg-accent-2 transition-opacity duration-100 ease-in-out", type="submit", name="search")=t('Search')
+          input#search-input.shrink-1.shadow.appearance-none.border.w-full(class="hidden opacity-0 focus:outline-none focus:shadow-outline transition-opacity duration-100 ease-in-out", type="text", name="searchInput")
+               
+      form.w-full.rounded.overflow-hidden.p-2(
+        hx-post="/messaging/send-chat/"+ friend_id, 
+        hx-swap="innerHTML", 
+        hx-target=".chat-feed")
+        div.flex.items-center.justify-between.gap-4
+          input.shadow.appearance-none.border.w-full(data-cy="chat-input", class="focus:outline-none focus:shadow-outline", type="text", name="chatInput")
+          button.w-18.px-4.rounded.bg-accent-1.text-white.font-bold(data-cy="chat-send",class="hover:bg-accent-2", type="submit", name="send")=t('Send')
+          svg.shrink-0.h-10.fill-text.self-end.px-2(viewBox="0 -960 960 960", onclick="toggleSearch()")
+            path(xmlns="http://www.w3.org/2000/svg", d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z", class="hover:fill-accent-2")
+script.
+  function toggleSearch() {
+    const searchSubmit = document.getElementById("search-submit");
+    const searchInput = document.getElementById("search-input");
+    const isSearchVisible = !searchInput.classList.contains("hidden");
+
+    if (!searchSubmit || !searchInput) { return; }
+    if (isSearchVisible) {
+      searchSubmit.classList.remove("opacity-100");
+      searchSubmit.classList.add("opacity-0");
+
+      searchInput.classList.remove("opacity-100");
+      searchInput.classList.add("opacity-0");
+
+      setTimeout(function() {
+        searchSubmit.classList.add("hidden");
+        searchInput.classList.add("hidden");
+      }, 300);
+    } else {
+      searchSubmit.classList.remove("hidden");
+      searchInput.classList.remove("hidden");
+      setTimeout(function() {
+        searchSubmit.classList.add("opacity-100");
+        searchInput.classList.add("opacity-100");
+      }, 10);
+    }
+  }

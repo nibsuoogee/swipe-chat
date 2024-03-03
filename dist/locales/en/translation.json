@@ -32,5 +32,9 @@
   "New": "New",
   "again": "again",
   "Delete": "Delete",
-  "No more profiles": "No more profiles"
+  "No more profiles": "No more profiles",
+  "Previous": "Previous",
+  "Page": "Page",
+  "Next": "Next",
+  "Back to matches": "Back to matches"
 }
