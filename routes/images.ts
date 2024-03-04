@@ -12,6 +12,7 @@ import i18next from '../i18n.js';
 
 router.get('/', checkAuthReturnMarkup, function (req, res, next) {
   let template = pug.compileFile('views/image.pug');
+
   const user = req.user as IUser | null;
   if (!user || !user.images) {
     let markup = template({ t: i18next.t, images: [] });
@@ -74,11 +75,13 @@ router.post('/upload-image', checkAuthReturnMarkup, (req, res, next) => {
 router.post('/remove-image/:image', checkAuthReturnMarkup,
   async (req, res, next) => {
     const template = pug.compileFile('views/image.pug');
+
     try {
       let user = req.user as IUser | null;
       if (!user || !user._id) {
         throw new Error('Invalid user or user ID');
       }
+
       await User.updateOne({ _id: user._id },
         { $pull: { 'images': req.params.image } });
       user = await getUserById(user._id);
@@ -92,9 +95,13 @@ router.post('/remove-image/:image', checkAuthReturnMarkup,
       });
       return res.send(markup);
     } catch (err) {
+      let errorMessage = '';
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      }
       const markup = template({
         t: i18next.t,
-        status_message: i18next.t('Image removal failed')
+        status_message: i18next.t('Image removal failed') + ': ' + errorMessage
       });
       return res.send(markup);
     }

@@ -41,7 +41,7 @@ const logout = () => {
 
 describe('mutual like to match spec', () => {
   it('passes', () => {
-    cy.fixture('my-users').then((usersFixture) => {
+    cy.fixture('two-users').then((usersFixture) => {
       expect(usersFixture).to.have.lengthOf(2);
 
       /* Login first user */

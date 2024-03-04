@@ -27,7 +27,7 @@ const registerAccount = (username, email, password) => {
 
 describe('register spec', () => {
   it('passes', () => {
-    cy.fixture('my-users').then((usersFixture) => {
+    cy.fixture('two-users').then((usersFixture) => {
       usersFixture.forEach((user) => {
         registerAccount(user.username, user.email, user.password);
       });

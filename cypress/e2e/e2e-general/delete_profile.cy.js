@@ -30,7 +30,7 @@ const deleteProfile = (email, password) => {
 
 describe('delete profile spec', () => {
   it('passes', () => {
-    cy.fixture('my-users').then((usersFixture) => {
+    cy.fixture('two-users').then((usersFixture) => {
       usersFixture.forEach((user) => {
         deleteProfile(user.email, user.password);
       });

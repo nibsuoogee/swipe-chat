@@ -255,9 +255,6 @@ export async function getMessages(filter: string, req: Request, res: Response,
   }).catch((err) => { return next(err); });
 }
 
-/*
-* Returns without waiting when match has been removed from initiator's matches
-*/
 export async function removeMatch(userid: Types.ObjectId,
   friendid: Types.ObjectId, next: NextFunction) {
 

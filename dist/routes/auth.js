@@ -12,15 +12,16 @@ router.get('/register', checkNotAuthReturnMarkup, function (req, res, next) {
     let markup = template({ t: i18next.t });
     res.send(markup);
 });
-router.post('/register', checkNotAuthReturnMarkup, function (req, res, next) {
-    User.findOne({ email: req.body.email }).then((email) => {
-        if (email) {
-            let template = pug.compileFile('views/register.pug');
+router.post('/register', checkNotAuthReturnMarkup, async function (req, res, next) {
+    let template = pug.compileFile('views/register.pug');
+    try {
+        const user = await User.findOne({ email: req.body.email });
+        if (user) {
             let markup = template({
                 t: i18next.t,
                 error_message: i18next.t('Email') + ' ' + i18next.t('in use')
             });
-            return res.send(markup);
+            res.send(markup);
         }
         else {
             bcrypt.genSalt(saltRounds, function (err, salt) {
@@ -31,21 +32,24 @@ router.post('/register', checkNotAuthReturnMarkup, function (req, res, next) {
                         password: hash,
                         is_admin: false
                     }).save().then(() => {
-                        let template = pug.compileFile('views/login.pug');
+                        template = pug.compileFile('views/login.pug');
                         let markup = template({ t: i18next.t });
-                        return res.send(markup);
+                        res.send(markup);
                     }).catch((err) => {
                         let template = pug.compileFile('views/register.pug');
                         let markup = template({
                             t: i18next.t,
-                            error_message: i18next.t('Username') + ' ' + i18next.t('in use')
+                            error_message: err
                         });
-                        return res.send(markup);
+                        res.send(markup);
                     });
                 });
             });
         }
-    }).catch((err) => { return next(err); });
+    }
+    catch (err) {
+        next(err);
+    }
 });
 router.get('/login', checkNotAuthReturnMarkup, function (req, res, next) {
     let template = pug.compileFile('views/login.pug');
