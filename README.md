@@ -1,3 +1,6 @@
+
+<img src="https://github.com/nibsuoogee/swipe-chat/assets/37696410/510ef3cd-0862-4c71-8a80-25d991e2c879" width="150" height="150">
+
 # Swipe Chat
 
 A chat web app for desktop and mobile screens, where meeting new people is as easy as a glance followed by a click. 
