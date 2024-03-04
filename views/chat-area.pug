@@ -2,6 +2,9 @@ section.chat-area.flex.flex-col.justify-center
   h1.text-md.text-text.p-4(class="hover:text-accent-2", hx-get="/messaging", hx-swap="outerHTML transition:true", hx-target=".main", hx-trigger="click") #{t('Back to matches')}
   div.bg-background
     div.flex.justify-center.items-center.flex-col.py-2
+      if image
+        div.flex.items-center.justify-center
+          image.p-1.h-16.w-16.rounded-full.object-cover(src="/uploads/"+image, alt="Profile image")  
       h1.block.text-text.mb-2.text-3xl #{friend}
       if last_edited
         p.block.text-text.text-xs #{t('Last edited')}: #{last_edited}

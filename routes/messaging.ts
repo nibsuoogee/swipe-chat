@@ -118,9 +118,12 @@ router.get('/chat/:id', checkAuthReturnMarkup, async function (req, res, next) {
 
   User.findOne({ _id: req.params.id }).then((friend) => {
     if (friend) {
+      const image = friend.images && friend.images.length > 0 ?
+        friend.images[0] : 'default.png';
       if (last_edited) {
         let markup = template({
           t: i18next.t,
+          image: image,
           friend: friend.user_name,
           friend_id: friend._id,
           last_edited: last_edited.toLocaleDateString('en-GB') + ' ' +
@@ -130,6 +133,7 @@ router.get('/chat/:id', checkAuthReturnMarkup, async function (req, res, next) {
       } else {
         let markup = template({
           t: i18next.t,
+          image: image,
           friend: friend.user_name,
           friend_id: friend._id
         });
@@ -257,10 +261,10 @@ export async function getMessages(filter: string, req: Request, res: Response,
 
 export async function removeMatch(userid: Types.ObjectId,
   friendid: Types.ObjectId, next: NextFunction) {
-
-  await User.findOne({ _id: friendid }).then((friend) => {
+  try {
+    const friend = await User.findOne({ _id: friendid });
     if (friend) {
-      User.updateOne({ _id: userid }, {
+      await User.updateOne({ _id: userid }, {
         $pull: { 'likes': friend._id }
       }).catch((err) => {
         return next(err);
@@ -269,26 +273,26 @@ export async function removeMatch(userid: Types.ObjectId,
       const match = friend.likes.includes(userid);
 
       if (match) {
-        User.updateOne({ _id: userid }, {
+        await User.updateOne({ _id: userid }, {
           $pull: { 'friends': friend._id }
-        }).then(() => {
-          return;
         }).catch((err) => {
           return next(err);
         });
 
-        User.updateOne({ _id: friend._id }, {
+        await User.updateOne({ _id: friend._id }, {
           $pull: { 'friends': userid }
         }).catch((err) => {
           return next(err);
         });
 
-        removeChat(userid, friendid);
+        await removeChat(userid, friendid);
       }
     } else {
       next(new Error('user not found'));
     }
-  }).catch((err) => { return next(err); });
+  } catch (err) {
+    next(err);
+  }
 }
 
 export async function removeChat(id1: Types.ObjectId, id2: Types.ObjectId) {

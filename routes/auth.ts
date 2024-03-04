@@ -23,11 +23,16 @@ router.post('/register', checkNotAuthReturnMarkup,
     let template = pug.compileFile('views/register.pug');
 
     try {
-      const user = await User.findOne({ email: req.body.email });
+      const user = await User.findOne({
+        $or: [
+          { user_name: req.body.username },
+          { email: req.body.email }]
+      });
       if (user) {
         let markup = template({
           t: i18next.t,
-          error_message: i18next.t('Email') + ' ' + i18next.t('in use')
+          error_message: i18next.t('Email') + ' ' + i18next.t('or') + ' ' +
+            i18next.t('Username') + ' ' + i18next.t('in use')
         });
         res.send(markup);
 

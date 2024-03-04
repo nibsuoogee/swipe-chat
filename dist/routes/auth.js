@@ -15,11 +15,17 @@ router.get('/register', checkNotAuthReturnMarkup, function (req, res, next) {
 router.post('/register', checkNotAuthReturnMarkup, async function (req, res, next) {
     let template = pug.compileFile('views/register.pug');
     try {
-        const user = await User.findOne({ email: req.body.email });
+        const user = await User.findOne({
+            $or: [
+                { user_name: req.body.username },
+                { email: req.body.email }
+            ]
+        });
         if (user) {
             let markup = template({
                 t: i18next.t,
-                error_message: i18next.t('Email') + ' ' + i18next.t('in use')
+                error_message: i18next.t('Email') + ' ' + i18next.t('or') + ' ' +
+                    i18next.t('Username') + ' ' + i18next.t('in use')
             });
             res.send(markup);
         }
@@ -36,7 +42,6 @@ router.post('/register', checkNotAuthReturnMarkup, async function (req, res, nex
                         let markup = template({ t: i18next.t });
                         res.send(markup);
                     }).catch((err) => {
-                        let template = pug.compileFile('views/register.pug');
                         let markup = template({
                             t: i18next.t,
                             error_message: err
@@ -63,7 +68,7 @@ router.get('/login', checkNotAuthReturnMarkup, function (req, res, next) {
         const lastErrorMessage = req.session.messages[lastErrorIndex];
         markup = template({ t: i18next.t, error_message: lastErrorMessage });
     }
-    return res.send(markup);
+    res.send(markup);
 });
 router.post('/login', checkNotAuthReturnIndex, passport.authenticate('local', {
     successRedirect: '/swipe',

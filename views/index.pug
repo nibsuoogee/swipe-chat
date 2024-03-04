@@ -12,7 +12,7 @@ html(lang='en').scrollbar-thin.scrollbar-thumb-content.scrollbar-track-backgroun
     p(hx-get="/swipe", hx-swap="outerHTML", hx-target="this", hx-trigger="load")
     
     header.bg-content.fixed.top-0.w-full.z-20
-        nav.flex.items-center.justify-between.bg-content(class="w-[80%] mx-auto h-16")
+        nav.flex.items-center.justify-between.bg-content(class="w-[80%] mx-auto h-16 ml-2 sm:ml-auto")
           div.flex.items-center.justify-between.bg-content
             svg.w-10.fill-text.absolute(viewBox="0 0 500 500")
               path(xmlns="http://www.w3.org/2000/svg", d="M 36.987 480.196 C 36.987 480.196 60.176 511.937 183.563 465.938 C 306.952 419.936 -8.876 354.371 102.06 224.406 C 212.997 94.441 139.411 324.467 203.942 279.616 C 268.472 234.762 267.326 239.353 258.27 219.806 C 249.216 200.258 268.464 -91.88 120.17 97.893 C -28.122 287.667 105.458 364.719 140.548 413.024 C 175.637 461.327 71.633 457.297 94.278 420.489 C 116.923 383.681 3.954 382.49 36.777 430.796 C 69.599 479.099 17.354 465.732 36.987 480.196 Z")
@@ -24,7 +24,7 @@ html(lang='en').scrollbar-thin.scrollbar-thumb-content.scrollbar-track-backgroun
             span.ms-3.text-text.text-xl(class="hover:text-accent-2", hx-post="/lang/en", hx-trigger="click") EN
             span.ms-3.text-text.text-xl(class="hover:text-accent-2", hx-post="/lang/fi", hx-trigger="click") FI
           div
-            label.h-16(class="inline-flex items-center cursor-pointer")
+            label.ms-3.h-16(class="inline-flex items-center cursor-pointer")
               input#toggle-dark-mode(type="checkbox" onclick="toggleDarkMode()" value="" class="sr-only peer")
               div(class="relative w-11 h-6 bg-text border-text peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-accent-1")      
               span.ms-3.text-text.text-xl(class="hidden md:inline-block")=t("Dark mode")

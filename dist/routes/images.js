@@ -81,9 +81,13 @@ router.post('/remove-image/:image', checkAuthReturnMarkup, async (req, res, next
         return res.send(markup);
     }
     catch (err) {
+        let errorMessage = '';
+        if (err instanceof Error) {
+            errorMessage = err.message;
+        }
         const markup = template({
             t: i18next.t,
-            status_message: i18next.t('Image removal failed')
+            status_message: i18next.t('Image removal failed') + ': ' + errorMessage
         });
         return res.send(markup);
     }
