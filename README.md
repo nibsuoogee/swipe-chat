@@ -2,7 +2,7 @@
 
 A chat web app for desktop and mobile screens, where meeting new people is as easy as a glance followed by a click. 
 
-[![Demo YouTube video](https://img.youtube.com/vi/2hCx-381JuE/0.jpg)](https://www.youtube.com/watch?v=2hCx-381JuE)
+[![Demo YouTube video](https://img.youtube.com/vi/UD_b6C8wk-E/0.jpg)](https://www.youtube.com/watch?v=UD_b6C8wk-E)
 
 Main views and functions:
 
