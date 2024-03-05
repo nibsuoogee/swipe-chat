@@ -3,7 +3,7 @@
 
 # Swipe Chat
 
-A chat web app for desktop and mobile screens, where meeting new people is as easy as a glance followed by a click. 
+A chat web app for desktop and mobile screens, where meeting new people is as easy as a glance followed by a click. Built as a uni project.
 
 [![Demo YouTube video](https://img.youtube.com/vi/UD_b6C8wk-E/0.jpg)](https://www.youtube.com/watch?v=UD_b6C8wk-E)
 
@@ -64,6 +64,10 @@ Passport does the heavy lifting for user authentication and does not interfere w
 [`cypress/e2e/e2e-general`](https://github.com/nibsuoogee/swipe-chat/tree/main/cypress/e2e/e2e-general) Contains general end-to-end tests for the main application functions
 
 [`cypress/e2e/component`](https://github.com/nibsuoogee/swipe-chat/tree/main/cypress/e2e/component)  Contains tests for different component views. Server-side rendering means api testing is more critical. 
+
+## Security
+
+The app contains countless security vulns like XSS holes which should still be addressed.
 
 ## Assignment related features and requested points
 
